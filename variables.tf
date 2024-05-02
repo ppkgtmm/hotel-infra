@@ -11,7 +11,7 @@ variable "data-seeder-role" {
 }
 
 variable "source-db-name" {
-  default = "oltp_hotel"
+  default = "oltp-hotel"
 }
 
 variable "source-db-username" {
