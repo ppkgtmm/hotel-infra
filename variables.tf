@@ -9,3 +9,7 @@ variable "data-generator-role" {
 variable "data-seeder-role" {
   default = "rds-s3-access"
 }
+
+variable "source-db-name" {
+  default = "oltp_hotel"
+}
