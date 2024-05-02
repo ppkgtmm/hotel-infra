@@ -27,7 +27,7 @@ export S3_BUCKET=${aws_s3_bucket.staging-area.id}
 export AWS_REGION=${var.region}
 ${file("./datagen/setup.sh")}
 EOF
-  iam_instance_profile = var.s3-role-name
+  iam_instance_profile = var.data-generator-role
   tags = {
     Name = "data-generator"
   }
