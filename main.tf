@@ -31,6 +31,8 @@ resource "random_uuid" "rand" {}
 
 data "aws_vpc" "default" {
   default = true
+resource "google_compute_address" "static" {
+  name = "ipv4-address"
 }
 
 data "aws_security_group" "default" {
