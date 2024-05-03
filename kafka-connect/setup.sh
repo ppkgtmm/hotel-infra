@@ -12,4 +12,4 @@ cd kafka_2.13-3.7.0
 wget -O config.properties https://github.com/ppkgtmm/hotel-infra/raw/main/connect.properties
 echo "plugin.path=$PLUGIN_PATH" >> config.properties
 echo "bootstrap.servers=$SERVER:9092" >> config.properties
-bin/connect-standalone.sh config.properties
+bin/connect-distributed.sh config.properties
