@@ -27,19 +27,14 @@ provider "google" {
 
 provider "random" {}
 
-resource "random_uuid" "rand" {}
+# data "aws_caller_identity" "current" {}
 
-data "aws_vpc" "default" {
-  default = true
-resource "google_compute_address" "static" {
-  name = "ipv4-address"
-}
+# data "aws_vpc" "default" {
+#   default = true
+# }
 
-data "aws_security_group" "default" {
-  vpc_id = data.aws_vpc.default.id
-}
-
-# data "google_compute_subnetwork" "default" {
+# data "aws_security_group" "default" {
+#   vpc_id = data.aws_vpc.default.id
 # }
 
 # resource "aws_vpc_security_group_ingress_rule" "allow_postgres" {
@@ -49,11 +44,3 @@ data "aws_security_group" "default" {
 #   from_port         = 5432
 #   to_port           = 5432
 # }
-
-output "aws_vpc" {
-  value = data.aws_vpc.default.id
-}
-
-output "gcp_vpc" {
-  value = data.google_compute_subnetwork.default.ip_cidr_range
-}
