@@ -1,4 +1,4 @@
-variable "region" {
+variable "aws_region" {
   default = "ap-southeast-1"
 }
 
@@ -22,4 +22,13 @@ variable "source-db-username" {
 variable "source-db-password" {
   type      = string
   sensitive = true
+}
+
+variable "gcp-project-id" {
+  type      = string
+  sensitive = true
+}
+
+variable "gcp_region" {
+  default = "us-central1"
 }
