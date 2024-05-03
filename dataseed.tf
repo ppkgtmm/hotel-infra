@@ -9,6 +9,7 @@ resource "aws_db_instance" "source-db" {
   username            = var.source-db-username
   password            = var.source-db-password
   allocated_storage   = 5
+  publicly_accessible = true
 }
 
 resource "aws_instance" "data-seeder" {
@@ -17,7 +18,7 @@ resource "aws_instance" "data-seeder" {
   user_data            = <<EOF
 #!/bin/bash
 export S3_BUCKET=${aws_s3_bucket.staging-area.id}
-export AWS_REGION=${var.region}
+export AWS_REGION=${var.aws_region}
 export SOURCE_DB=postgresql://${aws_db_instance.source-db.username}:${aws_db_instance.source-db.password}@${aws_db_instance.source-db.endpoint}/${aws_db_instance.source-db.db_name}
 ${file("./dataseed/setup.sh")}
 EOF
