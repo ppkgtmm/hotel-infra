@@ -9,7 +9,7 @@ resource "aws_instance" "data-generator" {
   user_data            = <<EOF
 #!/bin/bash
 export S3_BUCKET=${aws_s3_bucket.staging-area.id}
-export AWS_REGION=${var.region}
+export AWS_REGION=${var.aws_region}
 ${file("./datagen/setup.sh")}
 EOF
   iam_instance_profile = var.data-generator-role
