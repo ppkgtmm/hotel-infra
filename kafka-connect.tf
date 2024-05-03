@@ -1,11 +1,11 @@
 resource "random_uuid" "rand" {}
 
 resource "google_compute_address" "kafka" {
-  name = "ipv4-address"
+  name = "kafka-ipv4-address"
 }
 
 resource "google_compute_address" "kafka-connect" {
-  name = "ipv4-address"
+  name = "kafka-connect-ipv4-address"
 }
 
 resource "google_compute_instance" "kafka" {
