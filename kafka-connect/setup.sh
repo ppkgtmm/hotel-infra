@@ -9,7 +9,7 @@ wget -O connector.tar.gz https://repo1.maven.org/maven2/io/debezium/debezium-con
 tar zxf connector.tar.gz
 mv debezium-connector-postgres $PLUGIN_PATH/
 cd kafka_2.13-3.7.0
-wget -O config.properties https://github.com/ppkgtmm/hotel-infra/raw/main/connect.properties
+wget -O config.properties https://github.com/ppkgtmm/hotel-infra/raw/main/kafka-connect/connect.properties
 echo "plugin.path=$PLUGIN_PATH" >> config.properties
 echo "bootstrap.servers=$SERVER:9092" >> config.properties
 bin/connect-distributed.sh config.properties
