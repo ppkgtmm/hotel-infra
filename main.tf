@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/google"
       version = "5.27.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.6.1"
+    }
   }
 }
 
@@ -18,9 +22,12 @@ provider "aws" {
 provider "google" {
   project = var.gcp-project-id
   region  = var.gcp_region
+  zone    = var.gcp_zone
 }
 
-data "aws_caller_identity" "current" {}
+provider "random" {}
+
+resource "random_uuid" "rand" {}
 
 data "aws_vpc" "default" {
   default = true
