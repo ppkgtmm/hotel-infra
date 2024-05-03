@@ -32,3 +32,11 @@ variable "gcp-project-id" {
 variable "gcp_region" {
   default = "us-central1"
 }
+
+variable "gcp_zone" {
+  default = "us-central1-c"
+}
+
+variable "gcp_disk_image" {
+  default = "ubuntu-2204-jammy-v20240501"
+}
