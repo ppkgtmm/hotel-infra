@@ -10,6 +10,7 @@ resource "aws_db_instance" "source-db" {
   password            = var.source-db-password
   allocated_storage   = 5
   publicly_accessible = true
+  availability_zone   = var.aws_zone
 }
 
 resource "aws_instance" "data-seeder" {
@@ -26,4 +27,5 @@ EOF
   tags = {
     Name = "data-seeder"
   }
+  availability_zone = var.aws_zone
 }
