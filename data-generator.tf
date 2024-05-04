@@ -16,4 +16,5 @@ EOF
   tags = {
     Name = "data-generator"
   }
+  availability_zone = var.aws_zone
 }
