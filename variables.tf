@@ -44,3 +44,7 @@ variable "gcp_zone" {
 variable "gcp_disk_image" {
   default = "ubuntu-2204-jammy-v20240501"
 }
+
+variable "gcp_network" {
+  default = "default"
+}
