@@ -34,6 +34,7 @@ resource "google_compute_instance" "kafka-connect" {
   machine_type   = "e2-micro"
   name           = "kafka-connect"
   enable_display = false
+  tags           = ["kafka-connect"]
   boot_disk {
     initialize_params {
       image = var.gcp_disk_image
