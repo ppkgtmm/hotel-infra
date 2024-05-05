@@ -44,3 +44,10 @@ resource "aws_vpc_security_group_ingress_rule" "allow_postgres" {
   from_port         = 5432
   to_port           = 5432
 }
+
+module "data-generator" {
+  source     = "./data-generator"
+  aws_zone   = var.aws_zone
+  aws_region = var.aws_region
+  account-id = data.aws_caller_identity.current.account_id
+}
