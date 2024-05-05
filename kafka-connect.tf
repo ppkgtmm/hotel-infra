@@ -1,11 +1,5 @@
 resource "random_uuid" "rand" {}
 
-resource "google_compute_address" "kafka" {
-  name         = "kafka-ip-address"
-  address_type = "INTERNAL"
-  subnetwork   = var.gcp_network
-  region       = var.gcp_region
-}
 
 resource "google_compute_instance" "kafka" {
   machine_type   = "e2-micro"
@@ -18,9 +12,9 @@ resource "google_compute_instance" "kafka" {
       type  = "pd-standard"
     }
   }
+  tags = ["kafka"]
   network_interface {
-    network    = var.gcp_network
-    network_ip = google_compute_address.kafka.address
+    network = var.gcp_network
     access_config {
     }
   }
@@ -33,7 +27,6 @@ resource "google_compute_instance" "kafka" {
   metadata_startup_script = <<EOF
 #!/bin/bash
 export KAFKA_CLUSTER_ID=${random_uuid.rand.id}
-export KAFKA_SERVER=${google_compute_address.kafka.address}
 ${file("./kafka/setup.sh")}
 EOF
 }
@@ -62,7 +55,7 @@ resource "google_compute_instance" "kafka-connect" {
   }
   metadata_startup_script = <<EOF
 #!/bin/bash
-export KAFKA_SERVER=${google_compute_address.kafka.address}
+export KAFKA_SERVER=${google_compute_instance.kafka.name}
 ${file("./kafka-connect/setup.sh")}
 EOF
 }
