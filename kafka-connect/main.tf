@@ -24,7 +24,7 @@ resource "google_compute_instance" "kafka-connect" {
   metadata_startup_script = <<EOF
 #!/bin/bash
 export KAFKA_SERVER=${var.kafka_server}
-${file("./setup.sh")}
+${file("./kafka-connect/setup.sh")}
 EOF
 }
 

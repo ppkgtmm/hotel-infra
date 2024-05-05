@@ -26,6 +26,6 @@ resource "google_compute_instance" "kafka" {
   metadata_startup_script = <<EOF
 #!/bin/bash
 export KAFKA_CLUSTER_ID=${random_uuid.rand.id}
-${file("./setup.sh")}
+${file("./kafka/setup.sh")}
 EOF
 }

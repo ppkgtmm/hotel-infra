@@ -21,7 +21,7 @@ resource "aws_instance" "data-seeder" {
 export S3_BUCKET=${aws_s3_bucket.staging-area.id}
 export AWS_REGION=${var.aws_region}
 export SOURCE_DB=postgresql://${aws_db_instance.source-db.username}:${aws_db_instance.source-db.password}@${aws_db_instance.source-db.endpoint}/${aws_db_instance.source-db.db_name}
-${file("./setup.sh")}
+${file("./data-seeder/setup.sh")}
 EOF
   iam_instance_profile = var.data-seeder-role
   tags = {

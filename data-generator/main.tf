@@ -10,7 +10,7 @@ resource "aws_instance" "data-generator" {
 #!/bin/bash
 export S3_BUCKET=${aws_s3_bucket.staging-area.id}
 export AWS_REGION=${var.aws_region}
-${file("./setup.sh")}
+${file("./data-generator/setup.sh")}
 EOF
   iam_instance_profile = var.data-generator-role
   tags = {
