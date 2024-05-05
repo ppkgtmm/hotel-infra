@@ -18,7 +18,7 @@ resource "aws_instance" "data-seeder" {
   ami                  = "ami-0be48b687295f8bd6"
   user_data            = <<EOF
 #!/bin/bash
-export S3_BUCKET=${aws_s3_bucket.staging-area.id}
+export S3_BUCKET=${var.bucket-id}
 export AWS_REGION=${var.aws_region}
 export SOURCE_DB=postgresql://${aws_db_instance.source-db.username}:${aws_db_instance.source-db.password}@${aws_db_instance.source-db.endpoint}/${aws_db_instance.source-db.db_name}
 ${file("./data-seeder/setup.sh")}
