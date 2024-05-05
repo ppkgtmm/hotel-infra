@@ -23,3 +23,7 @@ variable "source-db-password" {
   type      = string
   sensitive = true
 }
+
+variable "bucket-id" {
+  type = string
+}
