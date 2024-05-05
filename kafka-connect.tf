@@ -1,6 +1,5 @@
 resource "random_uuid" "rand" {}
 
-
 resource "google_compute_instance" "kafka" {
   machine_type   = "e2-micro"
   name           = "kafka"
