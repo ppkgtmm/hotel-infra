@@ -59,3 +59,14 @@ export KAFKA_SERVER=${google_compute_instance.kafka.name}
 ${file("./kafka-connect/setup.sh")}
 EOF
 }
+
+resource "google_compute_firewall" "name" {
+  network     = var.gcp_network
+  name        = "allow-kafka-internal"
+  target_tags = ["kafka"]
+  source_tags = ["kafka-connect"]
+  allow {
+    protocol = "tcp"
+    ports    = ["9092"]
+  }
+}
