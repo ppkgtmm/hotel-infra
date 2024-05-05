@@ -40,7 +40,7 @@ data "aws_security_group" "default" {
 resource "aws_vpc_security_group_ingress_rule" "allow_postgres" {
   security_group_id = data.aws_security_group.default.id
   ip_protocol       = "tcp"
-  cidr_ipv4         = "${google_compute_instance.kafka-connect.network_interface[0].access_config[0].nat_ip}/32"
+  cidr_ipv4         = "${module.kafka-connect.kafka-connect-ip}/32"
   from_port         = 5432
   to_port           = 5432
 }
