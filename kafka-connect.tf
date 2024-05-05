@@ -1,12 +1,15 @@
 resource "random_uuid" "rand" {}
+# resource "google_compute_address" "kafka" {
+#   name         = "kafka-ip-address"
+#   address_type = "INTERNAL"
+#   subnetwork   = var.gcp_network
+#   region       = var.gcp_region
+#   # ip_version   = "IPV6"
+# }
 
-resource "google_compute_address" "kafka" {
-  name = "kafka-ipv4-address"
-}
-
-resource "google_compute_address" "kafka-connect" {
-  name = "kafka-connect-ipv4-address"
-}
+# resource "google_compute_address" "kafka-connect" {
+#   name = "kafka-connect-ipv4-address"
+# }
 
 resource "google_compute_instance" "kafka" {
   machine_type   = "e2-micro"
@@ -20,9 +23,8 @@ resource "google_compute_instance" "kafka" {
     }
   }
   network_interface {
-    network = "default"
+    network = var.gcp_network
     access_config {
-      nat_ip = google_compute_address.kafka.address
     }
   }
   scheduling {
@@ -36,6 +38,7 @@ resource "google_compute_instance" "kafka" {
 export KAFKA_CLUSTER_ID=${random_uuid.rand.id}
 ${file("./kafka/setup.sh")}
 EOF
+  # export KAFKA_SERVER=${google_compute_address.kafka.address}
 }
 
 resource "google_compute_instance" "kafka-connect" {
@@ -50,9 +53,8 @@ resource "google_compute_instance" "kafka-connect" {
     }
   }
   network_interface {
-    network = "default"
+    network = var.gcp_network
     access_config {
-      nat_ip = google_compute_address.kafka-connect.address
     }
   }
   scheduling {
@@ -63,7 +65,20 @@ resource "google_compute_instance" "kafka-connect" {
   }
   metadata_startup_script = <<EOF
 #!/bin/bash
-export SERVER=${google_compute_address.kafka.address}
+export KAFKA_SERVER=${google_compute_instance.kafka.network_interface[0].network_ip}
 ${file("./kafka-connect/setup.sh")}
 EOF
 }
+
+# resource "google_compute_firewall" "kafka-firewall" {
+#   name     = "kafka-firewall"
+#   network  = var.gcp_network
+#   priority = 65535
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["9092"]
+#   }
+#   source_ranges = [":::"]
+#   source_tags   = google_compute_instance.kafka-connect.tags
+#   target_tags   = google_compute_instance.kafka.tags
+# }
