@@ -51,3 +51,11 @@ module "data-generator" {
   aws_region = var.aws_region
   account-id = data.aws_caller_identity.current.account_id
 }
+module "data-seeder" {
+  source             = "./data-seeder"
+  source-db-name     = var.source-db-name
+  source-db-password = var.source-db-password
+  source-db-username = var.source-db-username
+  aws_zone           = var.aws_zone
+  aws_region         = var.aws_region
+}
