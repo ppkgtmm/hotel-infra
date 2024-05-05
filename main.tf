@@ -58,6 +58,7 @@ module "data-seeder" {
   source-db-username = var.source-db-username
   aws_zone           = var.aws_zone
   aws_region         = var.aws_region
+  bucket-id          = module.data-generator.bucket-id
 }
 
 module "kafka" {
