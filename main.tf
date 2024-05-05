@@ -59,3 +59,16 @@ module "data-seeder" {
   aws_zone           = var.aws_zone
   aws_region         = var.aws_region
 }
+
+module "kafka" {
+  source         = "./kafka"
+  gcp_network    = var.gcp_network
+  gcp_disk_image = var.gcp_disk_image
+}
+
+module "kafka-connect" {
+  source         = "./kafka-connect"
+  gcp_network    = var.gcp_network
+  gcp_disk_image = var.gcp_disk_image
+  kafka_server   = module.kafka.kafka-server
+}
