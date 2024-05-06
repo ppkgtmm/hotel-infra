@@ -1,9 +1,9 @@
 variable "aws-region" {
-  default = "ap-southeast-1"
+  default = "ap-south-1"
 }
 
 variable "aws-zone" {
-  default = "ap-southeast-1c"
+  default = "ap-south-1c"
 }
 
 variable "source-db-name" {
