@@ -25,3 +25,31 @@ variable "aws-instance-type" {
 variable "connector-role" {
   type = string
 }
+
+variable "source-db-host" {
+  type = string
+}
+
+variable "source-db-port" {
+  type = string
+}
+
+variable "source-db-user" {
+  type = string
+}
+
+variable "source-db-password" {
+  type = string
+}
+
+variable "source-db-name" {
+  type = string
+}
+
+variable "replication-user" {
+  type = string
+}
+
+variable "replication-password" {
+  type = string
+}
