@@ -19,7 +19,7 @@ resource "aws_instance" "data-seeder" {
   user_data            = <<EOF
 #!/bin/bash
 export S3_BUCKET=${var.bucket-id}
-export aws-region=${var.aws-region}
+export AWS_REGION=${var.aws-region}
 export DB_USER=${aws_db_instance.source-db.username}
 export DB_PASSWORD=${aws_db_instance.source-db.password}
 export DB_ENDPOINT=${aws_db_instance.source-db.endpoint}
