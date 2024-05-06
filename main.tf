@@ -67,3 +67,9 @@ module "connector" {
   aws-ami           = var.aws-ami
   aws-instance-type = var.aws-instance-type
 }
+
+module "kafka" {
+  source            = "./kafka"
+  security-group-id = data.aws_security_group.default.id
+  subnets           = data.aws_subnets.subnets.ids
+}
