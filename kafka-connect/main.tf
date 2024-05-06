@@ -1,6 +1,6 @@
 resource "aws_mskconnect_worker_configuration" "hotel-connect" {
   name                    = "hotel-connect"
-  properties_file_content = file("./kafka/connect.properties")
+  properties_file_content = file("./kafka-connect/connect.properties")
 }
 
 data "aws_s3_bucket" "bucket" {
