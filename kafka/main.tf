@@ -16,7 +16,7 @@ data "aws_security_group" "default" {
 resource "aws_msk_cluster" "hotel-kafka" {
   cluster_name           = "hotel-kafka"
   kafka_version          = "3.5.1"
-  number_of_broker_nodes = 1
+  number_of_broker_nodes = 2
 
   broker_node_group_info {
     instance_type  = "kafka.m7g.large"
