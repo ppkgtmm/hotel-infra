@@ -3,7 +3,7 @@ variable "bucket-id" {
 }
 
 variable "object-key" {
-  default = "plugin/debezium-connector-postgres-2.6.1.Final-plugin.tar.gz"
+  default = "debezium-connector-postgres-2.6.1.Final-plugin.tar.gz"
 }
 
 variable "object-source" {
