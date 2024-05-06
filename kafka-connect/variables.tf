@@ -21,3 +21,25 @@ variable "security-group-id" {
 variable "connect-role" {
   type = string
 }
+
+variable "source-db-host" {
+  type = string
+}
+
+variable "source-db-port" {
+  type = string
+}
+
+variable "source-db-name" {
+  type = string
+}
+
+variable "replication-user" {
+  type      = string
+  sensitive = true
+}
+
+variable "replication-password" {
+  type      = string
+  sensitive = true
+}
