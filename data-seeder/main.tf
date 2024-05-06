@@ -1,8 +1,8 @@
 resource "aws_db_parameter_group" "source-db" {
-  name   = "${var.source-db-name}-postgres15.6"
-  family = "postgres15.6"
+  name   = "${var.source-db-name}-postgres15-6"
+  family = "postgres15"
   parameter {
-    name  = "logical_replication"
+    name  = "rds.logical_replication"
     value = "1"
   }
 }
