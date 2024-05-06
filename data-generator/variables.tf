@@ -7,7 +7,7 @@ variable "aws-zone" {
 }
 
 variable "data-generator-role" {
-  default = "s3-access"
+  type = string
 }
 
 variable "account-id" {
