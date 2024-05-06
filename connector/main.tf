@@ -13,5 +13,4 @@ EOF
     Name = "connector-setup"
   }
   availability_zone = var.aws-zone
-  instance_initiated_shutdown_behavior = "stop"
 }
