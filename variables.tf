@@ -27,3 +27,7 @@ variable "aws-ami" {
 variable "aws-instance-type" {
   default = "t2.micro"
 }
+
+variable "rds-s3-role" {
+  default = "rds-s3-access"
+}
