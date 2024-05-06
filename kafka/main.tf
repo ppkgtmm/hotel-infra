@@ -7,7 +7,7 @@ resource "aws_msk_serverless_cluster" "hotel-kafka" {
   client_authentication {
     sasl {
       iam {
-        enabled = false
+        enabled = true
       }
     }
   }
