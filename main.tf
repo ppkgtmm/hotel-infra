@@ -24,11 +24,12 @@ provider "random" {}
 data "aws_caller_identity" "current" {}
 
 module "data-generator" {
-  source     = "./data-generator"
-  aws_zone   = var.aws_zone
-  aws_region = var.aws_region
-  account-id = data.aws_caller_identity.current.account_id
-  aws-ami    = var.aws-ami
+  source            = "./data-generator"
+  aws_zone          = var.aws_zone
+  aws_region        = var.aws_region
+  account-id        = data.aws_caller_identity.current.account_id
+  aws-ami           = var.aws-ami
+  aws-instance-type = var.aws-instance-type
 }
 
 module "data-seeder" {
@@ -40,6 +41,7 @@ module "data-seeder" {
   aws_region         = var.aws_region
   bucket-id          = module.data-generator.bucket-id
   aws-ami            = var.aws-ami
+  aws-instance-type  = var.aws-instance-type
 }
 
 module "connector" {
