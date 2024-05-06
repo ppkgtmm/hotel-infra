@@ -1,21 +1,3 @@
-resource "aws_db_parameter_group" "source-db" {
-  name   = "${var.source-db-name}-postgres15.6"
-  family = "postgres15.6"
-
-  parameter {
-    name  = "logical_replication"
-    value = "1"
-  }
-  parameter {
-    name  = "log_replication_commands"
-    value = "1"
-  }
-  parameter {
-    name  = "log_statement"
-    value = "all"
-  }
-}
-
 resource "aws_db_instance" "source-db" {
   instance_class       = "db.t3.micro"
   engine               = "postgres"
