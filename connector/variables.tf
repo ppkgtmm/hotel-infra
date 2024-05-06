@@ -35,11 +35,13 @@ variable "source-db-port" {
 }
 
 variable "source-db-user" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "source-db-password" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "source-db-name" {
@@ -47,9 +49,11 @@ variable "source-db-name" {
 }
 
 variable "replication-user" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "replication-password" {
-  type = string
+  type      = string
+  sensitive = true
 }
