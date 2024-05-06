@@ -54,6 +54,5 @@ module "connector" {
 }
 
 module "kafka" {
-  source   = "./kafka"
-  aws-zone = var.aws-zone
+  source = "./kafka"
 }
