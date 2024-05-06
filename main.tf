@@ -28,18 +28,21 @@ module "data-generator" {
   aws_zone   = var.aws_zone
   aws_region = var.aws_region
   account-id = data.aws_caller_identity.current.account_id
+  aws-ami    = var.aws-ami
+}
+
+module "data-seeder" {
+  source             = "./data-seeder"
+  source-db-name     = var.source-db-name
+  source-db-password = var.source-db-password
+  source-db-username = var.source-db-username
+  aws_zone           = var.aws_zone
+  aws_region         = var.aws_region
+  bucket-id          = module.data-generator.bucket-id
+  aws-ami            = var.aws-ami
 }
 
 module "connector" {
   source    = "./connector"
   bucket-id = module.data-generator.bucket-id
 }
-# module "data-seeder" {
-#   source             = "./data-seeder"
-#   source-db-name     = var.source-db-name
-#   source-db-password = var.source-db-password
-#   source-db-username = var.source-db-username
-#   aws_zone           = var.aws_zone
-#   aws_region         = var.aws_region
-#   bucket-id          = module.data-generator.bucket-id
-# }
