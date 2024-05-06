@@ -13,3 +13,7 @@ variable "data-generator-role" {
 variable "account-id" {
   type = string
 }
+
+variable "aws-ami" {
+  type = string
+}

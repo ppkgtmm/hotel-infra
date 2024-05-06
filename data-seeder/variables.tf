@@ -27,3 +27,7 @@ variable "source-db-password" {
 variable "bucket-id" {
   type = string
 }
+
+variable "aws-ami" {
+  type = string
+}
