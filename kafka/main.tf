@@ -12,3 +12,7 @@ resource "aws_msk_serverless_cluster" "hotel-kafka" {
     }
   }
 }
+
+data "aws_msk_bootstrap_brokers" "kafka-servers" {
+  cluster_arn = aws_msk_serverless_cluster.hotel-kafka.arn
+}
