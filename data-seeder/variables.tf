@@ -7,7 +7,7 @@ variable "aws-zone" {
 }
 
 variable "data-seeder-role" {
-  default = "rds-s3-access"
+  type = string
 }
 
 variable "source-db-name" {
