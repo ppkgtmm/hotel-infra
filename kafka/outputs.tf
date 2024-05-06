@@ -1,3 +1,3 @@
 output "kafka-server" {
-  value = google_compute_instance.kafka.name
+  value = aws_msk_cluster.hotel-kafka.bootstrap_brokers_tls
 }
