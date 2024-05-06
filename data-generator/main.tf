@@ -17,4 +17,5 @@ EOF
     Name = "data-generator"
   }
   availability_zone = var.aws-zone
+  instance_initiated_shutdown_behavior = "stop"
 }
