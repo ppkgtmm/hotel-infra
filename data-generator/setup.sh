@@ -4,4 +4,3 @@ git clone https://github.com/ppkgtmm/hotel-datagen.git datagen
 cd datagen
 wget -O .env https://raw.githubusercontent.com/ppkgtmm/hotel-infra/main/.env
 ./run.sh
-shutdown -h +10s

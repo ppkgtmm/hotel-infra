@@ -7,4 +7,3 @@ tar xzf $PLUGIN.tar.gz -C $PLUGIN
 zip -r $PLUGIN.zip $PLUGIN
 mv $PLUGIN.zip plugin/
 aws s3 cp plugin s3://$S3_BUCKET/plugin --recursive --region $AWS_REGION
-shutdown -h +10s
