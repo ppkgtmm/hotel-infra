@@ -1,3 +1,3 @@
 output "plugin-path" {
-  value = var.object-key
+  value = "plugin/${var.plugin}.zip"
 }
