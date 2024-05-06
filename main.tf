@@ -67,7 +67,3 @@ module "connector" {
   aws-ami           = var.aws-ami
   aws-instance-type = var.aws-instance-type
 }
-
-module "kafka" {
-  source = "./kafka"
-}
