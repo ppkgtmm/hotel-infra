@@ -1,11 +1,23 @@
-variable "gcp_disk_image" {
+variable "bucket-id" {
   type = string
 }
 
-variable "gcp_network" {
+variable "plugin-path" {
   type = string
 }
 
-variable "kafka_server" {
+variable "kafka-servers" {
+  type = string
+}
+
+variable "subnets" {
+  type = list(string)
+}
+
+variable "security-group-id" {
+  type = string
+}
+
+variable "connect-role" {
   type = string
 }
