@@ -16,7 +16,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = var.aws-region
 }
 
 provider "random" {}
@@ -25,8 +25,8 @@ data "aws_caller_identity" "current" {}
 
 module "data-generator" {
   source            = "./data-generator"
-  aws_zone          = var.aws_zone
-  aws_region        = var.aws_region
+  aws-zone          = var.aws-zone
+  aws-region        = var.aws-region
   account-id        = data.aws_caller_identity.current.account_id
   aws-ami           = var.aws-ami
   aws-instance-type = var.aws-instance-type
@@ -37,8 +37,8 @@ module "data-seeder" {
   source-db-name     = var.source-db-name
   source-db-password = var.source-db-password
   source-db-username = var.source-db-username
-  aws_zone           = var.aws_zone
-  aws_region         = var.aws_region
+  aws-zone           = var.aws-zone
+  aws-region         = var.aws-region
   bucket-id          = module.data-generator.bucket-id
   aws-ami            = var.aws-ami
   aws-instance-type  = var.aws-instance-type

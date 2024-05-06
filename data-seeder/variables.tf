@@ -1,8 +1,8 @@
-variable "aws_region" {
+variable "aws-region" {
   type = string
 }
 
-variable "aws_zone" {
+variable "aws-zone" {
   type = string
 }
 

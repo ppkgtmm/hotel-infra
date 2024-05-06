@@ -1,8 +1,8 @@
-variable "aws_region" {
+variable "aws-region" {
   default = "ap-southeast-1"
 }
 
-variable "aws_zone" {
+variable "aws-zone" {
   default = "ap-southeast-1c"
 }
 

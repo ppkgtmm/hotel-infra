@@ -10,7 +10,7 @@ resource "aws_db_instance" "source-db" {
   password            = var.source-db-password
   allocated_storage   = 5
   publicly_accessible = true
-  availability_zone   = var.aws_zone
+  availability_zone   = var.aws-zone
 }
 
 resource "aws_instance" "data-seeder" {
@@ -19,7 +19,7 @@ resource "aws_instance" "data-seeder" {
   user_data            = <<EOF
 #!/bin/bash
 export S3_BUCKET=${var.bucket-id}
-export AWS_REGION=${var.aws_region}
+export aws-region=${var.aws-region}
 export DB_USER=${aws_db_instance.source-db.username}
 export DB_PASSWORD=${aws_db_instance.source-db.password}
 export DB_ENDPOINT=${aws_db_instance.source-db.endpoint}
@@ -30,5 +30,5 @@ EOF
   tags = {
     Name = "data-seeder"
   }
-  availability_zone = var.aws_zone
+  availability_zone = var.aws-zone
 }
