@@ -2,8 +2,9 @@ resource "aws_db_parameter_group" "source-db" {
   name   = "${var.source-db-name}-postgres15-6"
   family = "postgres15"
   parameter {
-    name  = "rds.logical_replication"
-    value = "1"
+    name         = "rds.logical_replication"
+    value        = "1"
+    apply_method = "pending-reboot"
   }
 }
 
