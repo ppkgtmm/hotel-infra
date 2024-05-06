@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "staging-area" {
 
 resource "aws_instance" "data-generator" {
   instance_type        = "t2.micro"
-  ami                  = "ami-0be48b687295f8bd6"
+  ami                  = var.aws-ami
   user_data            = <<EOF
 #!/bin/bash
 export S3_BUCKET=${aws_s3_bucket.staging-area.id}
