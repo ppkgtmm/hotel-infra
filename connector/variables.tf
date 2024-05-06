@@ -23,5 +23,5 @@ variable "aws-instance-type" {
 }
 
 variable "connector-role" {
-  default = "s3-access"
+  type = string
 }
