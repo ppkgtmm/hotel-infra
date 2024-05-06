@@ -6,10 +6,6 @@ variable "aws_zone" {
   default = "ap-southeast-1c"
 }
 
-variable "data-seeder-role" {
-  default = "rds-s3-access"
-}
-
 variable "source-db-name" {
   default = "hotel"
 }
@@ -26,4 +22,8 @@ variable "source-db-password" {
 
 variable "aws-ami" {
   default = "ami-0be48b687295f8bd6"
+}
+
+variable "aws-instance-type" {
+  default = "t2.micro"
 }
