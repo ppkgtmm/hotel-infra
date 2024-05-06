@@ -14,7 +14,7 @@ resource "aws_db_instance" "source-db" {
 }
 
 resource "aws_instance" "data-seeder" {
-  instance_type        = "t2.micro"
+  instance_type        = var.aws-instance-type
   ami                  = var.aws-ami
   user_data            = <<EOF
 #!/bin/bash
