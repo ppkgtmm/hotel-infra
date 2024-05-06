@@ -39,12 +39,13 @@ data "aws_security_group" "default" {
 }
 
 module "data-generator" {
-  source            = "./data-generator"
-  aws-zone          = var.aws-zone
-  aws-region        = var.aws-region
-  account-id        = data.aws_caller_identity.current.account_id
-  aws-ami           = var.aws-ami
-  aws-instance-type = var.aws-instance-type
+  source              = "./data-generator"
+  aws-zone            = var.aws-zone
+  aws-region          = var.aws-region
+  account-id          = data.aws_caller_identity.current.account_id
+  aws-ami             = var.aws-ami
+  aws-instance-type   = var.aws-instance-type
+  data-generator-role = var.s3-role
 }
 
 module "data-seeder" {
@@ -67,6 +68,7 @@ module "connector" {
   aws-zone          = var.aws-zone
   aws-ami           = var.aws-ami
   aws-instance-type = var.aws-instance-type
+  connector-role    = var.rds-s3-role
 }
 
 module "kafka" {
