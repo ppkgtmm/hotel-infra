@@ -35,3 +35,13 @@ variable "rds-s3-role" {
 variable "s3-role" {
   default = "s3-access"
 }
+
+variable "replication-user" {
+  type      = string
+  sensitive = true
+}
+
+variable "replication-password" {
+  type      = string
+  sensitive = true
+}
