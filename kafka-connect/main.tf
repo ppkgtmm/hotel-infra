@@ -41,9 +41,17 @@ resource "aws_mskconnect_connector" "hotel-connect" {
     }
   }
   connector_configuration = {
-    # "connector.class" = "com.github.jcustenborder.kafka.connect.simulator.SimulatorSinkConnector"
-    # "tasks.max"       = "1"
-    # "topics"          = "example"
+    "connector.class"     = "io.debezium.connector.postgresql.PostgresConnector"
+    "plugin.name"         = "pgoutput"
+    "tasks.max"           = "1"
+    "database.hostname"   = var.source-db-host
+    "database.port"       = var.source-db-port
+    "database.user"       = var.replication-user
+    "database.password"   = var.replication-password
+    "database.dbname"     = var.source-db-name
+    "topic.prefix"        = var.source-db-name
+    "schema.include.list" = "public"
+    "snapshot.mode"       = "when_needed"
   }
   kafka_cluster_client_authentication {}
   kafka_cluster_encryption_in_transit {}
