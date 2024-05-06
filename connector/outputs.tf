@@ -1,3 +1,3 @@
 output "plugin-path" {
-  value = aws_s3_object.connector-raw.key
+  value = var.object-key
 }
