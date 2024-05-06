@@ -57,6 +57,7 @@ module "data-seeder" {
   bucket-id          = module.data-generator.bucket-id
   aws-ami            = var.aws-ami
   aws-instance-type  = var.aws-instance-type
+  data-seeder-role   = var.rds-s3-role
 }
 
 module "connector" {
@@ -72,4 +73,14 @@ module "kafka" {
   source            = "./kafka"
   security-group-id = data.aws_security_group.default.id
   subnets           = data.aws_subnets.subnets.ids
+}
+
+module "kafka-connect" {
+  source            = "./kafka-connect"
+  security-group-id = data.aws_security_group.default.id
+  subnets           = data.aws_subnets.subnets.ids
+  bucket-id         = module.data-generator.bucket-id
+  kafka-servers     = module.kafka.kafka-server
+  plugin-path       = module.connector.plugin-path
+  connect-role      = var.rds-s3-role
 }
