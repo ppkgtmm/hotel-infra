@@ -24,23 +24,6 @@ variable "source-db-password" {
   sensitive = true
 }
 
-variable "gcp-project-id" {
-  type      = string
-  sensitive = true
-}
-
-variable "gcp_region" {
-  default = "us-central1"
-}
-
-variable "gcp_zone" {
-  default = "us-central1-c"
-}
-
-variable "gcp_disk_image" {
-  default = "ubuntu-2204-jammy-v20240501"
-}
-
-variable "gcp_network" {
-  default = "default"
+variable "aws-ami" {
+  default = "ami-0be48b687295f8bd6"
 }
