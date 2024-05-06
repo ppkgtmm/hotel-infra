@@ -92,7 +92,7 @@ module "kafka-connect" {
   security-group-id    = data.aws_security_group.default.id
   subnets              = data.aws_subnets.subnets.ids
   bucket-id            = module.data-generator.bucket-id
-  kafka-servers        = module.kafka.kafka-server
+  kafka-servers        = module.kafka.kafka-bootstrap-servers
   plugin-path          = module.connector.plugin-path
   connect-role         = var.rds-s3-role
   source-db-host       = module.data-seeder.source-db-host
