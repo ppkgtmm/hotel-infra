@@ -21,7 +21,7 @@ variable "source-db-password" {
 }
 
 variable "aws-ami" {
-  default = "ami-0be48b687295f8bd6"
+  default = "ami-072b1c33a2439c226"
 }
 
 variable "aws-instance-type" {
