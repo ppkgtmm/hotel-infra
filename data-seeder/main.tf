@@ -29,7 +29,6 @@ resource "aws_db_instance" "source-db" {
   allocated_storage    = 5
   publicly_accessible  = true
   availability_zone    = var.aws_zone
-  parameter_group_name = aws_db_parameter_group.source-db.name
 }
 
 resource "aws_instance" "data-seeder" {
