@@ -31,3 +31,7 @@ variable "aws-instance-type" {
 variable "rds-s3-role" {
   default = "rds-s3-access"
 }
+
+variable "s3-role" {
+  default = "s3-access"
+}
