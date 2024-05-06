@@ -45,6 +45,10 @@ module "data-seeder" {
 }
 
 module "connector" {
-  source    = "./connector"
-  bucket-id = module.data-generator.bucket-id
+  source            = "./connector"
+  bucket-id         = module.data-generator.bucket-id
+  aws-region        = var.aws-region
+  aws-zone          = var.aws-zone
+  aws-ami           = var.aws-ami
+  aws-instance-type = var.aws-instance-type
 }
