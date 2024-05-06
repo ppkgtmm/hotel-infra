@@ -62,13 +62,20 @@ module "data-seeder" {
 }
 
 module "connector" {
-  source            = "./connector"
-  bucket-id         = module.data-generator.bucket-id
-  aws-region        = var.aws-region
-  aws-zone          = var.aws-zone
-  aws-ami           = var.aws-ami
-  aws-instance-type = var.aws-instance-type
-  connector-role    = var.rds-s3-role
+  source               = "./connector"
+  bucket-id            = module.data-generator.bucket-id
+  aws-region           = var.aws-region
+  aws-zone             = var.aws-zone
+  aws-ami              = var.aws-ami
+  aws-instance-type    = var.aws-instance-type
+  connector-role       = var.rds-s3-role
+  source-db-host       = module.data-seeder.source-db-host
+  source-db-port       = module.data-seeder.source-db-port
+  source-db-user       = var.source-db-username
+  source-db-password   = var.source-db-password
+  source-db-name       = var.source-db-name
+  replication-user     = var.replication-user
+  replication-password = var.replication-password
 }
 
 module "kafka" {
