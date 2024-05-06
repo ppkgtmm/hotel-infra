@@ -59,6 +59,7 @@ module "data-seeder" {
   aws-ami            = var.aws-ami
   aws-instance-type  = var.aws-instance-type
   data-seeder-role   = var.rds-s3-role
+  depends_on         = [module.data-generator]
 }
 
 module "connector" {
@@ -76,12 +77,14 @@ module "connector" {
   source-db-name       = var.source-db-name
   replication-user     = var.replication-user
   replication-password = var.replication-password
+  depends_on           = [module.data-seeder]
 }
 
 module "kafka" {
   source            = "./kafka"
   security-group-id = data.aws_security_group.default.id
   subnets           = data.aws_subnets.subnets.ids
+  depends_on        = [module.connector]
 }
 
 module "kafka-connect" {
@@ -97,4 +100,5 @@ module "kafka-connect" {
   replication-user     = var.replication-user
   replication-password = var.replication-password
   source-db-name       = var.source-db-name
+  depends_on           = [module.kafka]
 }
