@@ -6,6 +6,13 @@ resource "aws_instance" "connector" {
 export S3_BUCKET=${var.bucket-id}
 export AWS_REGION=${var.aws-region}
 export PLUGIN=${var.plugin}
+export DB_HOST=${var.source-db-host}
+export DB_PORT=${var.source-db-port}
+export DB_USER=${var.source-db-user}
+export DB_PASSWORD=${var.source-db-password}
+export DB_NAME=${var.source-db-name}
+export DBZ_USER=${var.replication-user}
+export DBZ_PASSWORD=${var.replication-password}
 ${file("./connector/setup.sh")}
 EOF
   iam_instance_profile = var.connector-role
