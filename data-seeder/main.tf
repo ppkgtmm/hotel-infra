@@ -31,10 +31,10 @@ resource "aws_instance" "data-seeder" {
 #!/bin/bash
 export S3_BUCKET=${var.s3_bucket_name}
 export AWS_REGION=${var.aws_region}
-export DB_USER=${aws_db_instance.source_db.name}
+export DB_USER=${aws_db_instance.source_db.username}
 export DB_PASSWORD=${aws_db_instance.source_db.password}
 export DB_ENDPOINT=${aws_db_instance.source_db.endpoint}
-export DB_NAME=${aws_db_instance.source_db}
+export DB_NAME=${aws_db_instance.source_db.db_name}
 ${file("./data-seeder/setup.sh")}
 EOF
   iam_instance_profile = var.data_seeder_role
