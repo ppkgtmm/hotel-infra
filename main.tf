@@ -92,18 +92,10 @@ module "kafka" {
   depends_on       = [module.data_seeder]
 }
 
-# module "kafka-connect" {
-#   source               = "./kafka-connect"
-#   security-group-id    = data.aws_security_group.default.id
-#   subnets              = data.aws_subnets.subnets.ids
-#   s3-bucket-name       = var.s3-bucket-name
-#   kafka-servers        = module.kafka.kafka-servers
-#   plugin-path          = var.plugin-path
-#   connect-role         = var.rds-s3-role
-#   source-db-host       = module.data-seeder.source-db-host
-#   source-db-port       = module.data-seeder.source-db-port
-#   replication-user     = var.replication-user
-#   replication-password = var.replication-password
-#   source-db-name       = var.source-db-name
-#   depends_on           = [module.kafka]
-# }
+module "kafka_connect" {
+  source                  = "./kafka-connect"
+  gcp_disk_image          = var.gcp_disk_image
+  gcp_network             = var.gcp_network
+  kafka_bootstrap_servers = module.kafka.kafka_bootstrap_servers
+  depends_on              = [module.kafka]
+}
