@@ -3,9 +3,6 @@ resource "aws_instance" "connector" {
   ami                  = var.aws-ami
   user_data            = <<EOF
 #!/bin/bash
-export S3_BUCKET=${var.bucket-id}
-export AWS_REGION=${var.aws-region}
-export PLUGIN=${var.plugin}
 export DB_HOST=${var.source-db-host}
 export DB_PORT=${var.source-db-port}
 export DB_USER=${var.source-db-user}
