@@ -36,6 +36,7 @@ module "data-generator" {
   aws-ami             = var.aws-ami
   aws-instance-type   = var.aws-instance-type
   data-generator-role = var.s3-role
+  s3-bucket-name      = var.s3-bucket-name
 }
 
 module "data-seeder" {
@@ -45,7 +46,7 @@ module "data-seeder" {
   source-db-username = var.source-db-username
   aws-zone           = var.aws-zone
   aws-region         = var.aws-region
-  bucket-id          = module.data-generator.bucket-id
+  s3-bucket-name     = var.s3-bucket-name
   aws-ami            = var.aws-ami
   aws-instance-type  = var.aws-instance-type
   data-seeder-role   = var.rds-s3-role
@@ -54,8 +55,6 @@ module "data-seeder" {
 
 module "connector" {
   source               = "./connector"
-  bucket-id            = module.data-generator.bucket-id
-  aws-region           = var.aws-region
   aws-zone             = var.aws-zone
   aws-ami              = var.aws-ami
   aws-instance-type    = var.aws-instance-type
@@ -81,9 +80,9 @@ module "kafka-connect" {
   source               = "./kafka-connect"
   security-group-id    = data.aws_security_group.default.id
   subnets              = data.aws_subnets.subnets.ids
-  bucket-id            = module.data-generator.bucket-id
+  s3-bucket-name       = var.s3-bucket-name
   kafka-servers        = module.kafka.kafka-servers
-  plugin-path          = module.connector.plugin-path
+  plugin-path          = var.plugin-path
   connect-role         = var.rds-s3-role
   source-db-host       = module.data-seeder.source-db-host
   source-db-port       = module.data-seeder.source-db-port
