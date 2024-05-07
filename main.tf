@@ -28,7 +28,7 @@ data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
 }
 
-module "data-generator" {
+module "data_generator" {
   source              = "./data-generator"
   aws_zone            = var.aws_zone
   aws_region          = var.aws_region
@@ -39,7 +39,7 @@ module "data-generator" {
   s3_bucket_name      = var.s3_bucket_name
 }
 
-module "data-seeder" {
+module "data_seeder" {
   source             = "./data-seeder"
   source_db_name     = var.source_db_name
   source_db_password = var.source_db_password
@@ -50,7 +50,7 @@ module "data-seeder" {
   aws_ami            = var.aws_ami
   aws_instance_type  = var.aws_instance_type
   data_seeder_role   = var.rds_s3_role
-  depends_on         = [module.data-generator]
+  depends_on         = [module.data_generator]
 }
 
 # module "connector" {
@@ -69,12 +69,14 @@ module "data-seeder" {
 #   depends_on           = [module.data-seeder]
 # }
 
-# module "kafka" {
-#   source            = "./kafka"
-#   subnets           = data.aws_subnets.subnets.ids
-#   security-group-id = data.aws_security_group.default.id
-#   depends_on        = [module.connector]
-# }
+module "kafka" {
+  source           = "./kafka"
+  gcp_machine_type = var.gcp_machine_type
+  gcp_disk_type    = var.gcp_disk_type
+  gcp_network      = var.gcp_network
+  gcp_disk_image   = var.gcp_disk_image
+  depends_on       = [module.data_seeder]
+}
 
 # module "kafka-connect" {
 #   source               = "./kafka-connect"
