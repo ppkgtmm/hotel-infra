@@ -6,6 +6,14 @@ variable "gcp_network" {
   type = string
 }
 
+variable "gcp_disk_type" {
+  type = string
+}
+
+variable "gcp_machine_type" {
+  type = string
+}
+
 variable "kafka_bootstrap_servers" {
   type = string
 }
