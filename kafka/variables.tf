@@ -13,3 +13,7 @@ variable "gcp-machine-type" {
 variable "gcp-network" {
   type = string
 }
+
+variable "kafka-bootstrap-servers" {
+  default = ["kafka1", "kafka2", "kafka3"]
+}
