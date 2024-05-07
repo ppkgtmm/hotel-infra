@@ -67,22 +67,6 @@ module "data_seeder" {
   depends_on         = [module.data_generator]
 }
 
-# module "connector" {
-#   source               = "./connector"
-#   aws-zone             = var.aws-zone
-#   aws-ami              = var.aws-ami
-#   aws-instance-type    = var.aws-instance-type
-#   connector-role       = var.rds-s3-role
-#   source-db-host       = module.data-seeder.source-db-host
-#   source-db-port       = module.data-seeder.source-db-port
-#   source-db-user       = var.source-db-username
-#   source-db-password   = var.source-db-password
-#   source-db-name       = var.source-db-name
-#   replication-user     = var.replication-user
-#   replication-password = var.replication-password
-#   depends_on           = [module.data-seeder]
-# }
-
 module "kafka" {
   source           = "./kafka"
   gcp_machine_type = var.gcp_machine_type
@@ -95,7 +79,25 @@ module "kafka" {
 module "kafka_connect" {
   source                  = "./kafka-connect"
   gcp_disk_image          = var.gcp_disk_image
+  gcp_disk_type           = var.gcp_disk_type
+  gcp_machine_type        = var.gcp_machine_type
   gcp_network             = var.gcp_network
   kafka_bootstrap_servers = module.kafka.kafka_bootstrap_servers
+  source_db_host          = module.data_seeder.source_db_host
+  source_db_port          = module.data_seeder.source_db_port
+  source_db_username      = var.source_db_username
+  source_db_password      = var.source_db_password
+  source_db_name          = var.source_db_name
+  replication_user        = var.replication_user
+  replication_password    = var.replication_password
   depends_on              = [module.kafka]
+}
+
+resource "aws_security_group_rule" "allow_kafka_connect" {
+  security_group_id = data.aws_security_group.default.id
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = module.data_seeder.source_db_port
+  to_port           = module.data_seeder.source_db_port
+  cidr_blocks       = ["${module.kafka_connect.kafka_connect_ip}/32"]
 }
