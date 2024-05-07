@@ -1,27 +1,27 @@
-variable "aws-region" {
+variable "aws_region" {
   type = string
 }
 
-variable "aws-zone" {
+variable "aws_zone" {
   type = string
 }
 
-variable "data-generator-role" {
+variable "data_generator_role" {
   type = string
 }
 
-variable "account-id" {
+variable "account_id" {
   type = string
 }
 
-variable "aws-ami" {
+variable "aws_ami" {
   type = string
 }
 
-variable "aws-instance-type" {
+variable "aws_instance_type" {
   type = string
 }
 
-variable "s3-bucket-name" {
+variable "s3_bucket_name" {
   type = string
 }
