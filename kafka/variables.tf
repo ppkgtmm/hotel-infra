@@ -1,7 +1,7 @@
-variable "subnets" {
-  type = list(string)
+variable "gcp-disk-image" {
+  type = string
 }
 
-variable "security-group-id" {
+variable "gcp-network" {
   type = string
 }

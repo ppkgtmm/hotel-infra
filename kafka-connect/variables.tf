@@ -1,45 +1,11 @@
-variable "bucket-id" {
+variable "gcp-disk-image" {
   type = string
 }
 
-variable "plugin-path" {
+variable "gcp-network" {
   type = string
 }
 
-variable "kafka-servers" {
+variable "kafka-server" {
   type = string
-}
-
-variable "subnets" {
-  type = list(string)
-}
-
-variable "security-group-id" {
-  type = string
-}
-
-variable "connect-role" {
-  type = string
-}
-
-variable "source-db-host" {
-  type = string
-}
-
-variable "source-db-port" {
-  type = string
-}
-
-variable "source-db-name" {
-  type = string
-}
-
-variable "replication-user" {
-  type      = string
-  sensitive = true
-}
-
-variable "replication-password" {
-  type      = string
-  sensitive = true
 }

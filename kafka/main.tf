@@ -1,17 +1,31 @@
-resource "aws_msk_cluster" "hotel-kafka" {
-  cluster_name           = "hotel-kafka"
-  kafka_version          = "3.5.1"
-  number_of_broker_nodes = 3
+resource "random_uuid" "rand" {}
 
-  broker_node_group_info {
-    instance_type  = "kafka.t3.small"
-    client_subnets = var.subnets
-    storage_info {
-      ebs_storage_info {
-        volume_size = 5
-      }
+resource "google_compute_instance" "kafka" {
+  machine_type   = "e2-micro"
+  name           = "kafka"
+  enable_display = false
+  boot_disk {
+    initialize_params {
+      image = var.gcp-disk-image
+      size  = 10
+      type  = "pd-standard"
     }
-    security_groups = [var.security-group-id]
   }
+  tags = ["kafka"]
+  network_interface {
+    network = var.gcp-network
+    access_config {
+    }
+  }
+  scheduling {
+    automatic_restart   = false
+    on_host_maintenance = "TERMINATE"
+    preemptible         = true
+    provisioning_model  = "SPOT"
+  }
+  metadata_startup_script = <<EOF
+#!/bin/bash
+export KAFKA_CLUSTER_ID=${random_uuid.rand.id}
+${file("./kafka/setup.sh")}
+EOF
 }
-
