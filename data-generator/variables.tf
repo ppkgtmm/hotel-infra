@@ -21,3 +21,7 @@ variable "aws-ami" {
 variable "aws-instance-type" {
   type = string
 }
+
+variable "s3-bucket-name" {
+  type = string
+}
