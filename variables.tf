@@ -51,5 +51,5 @@ variable "s3-bucket-name" {
 }
 
 variable "plugin-path" {
-  default = "plugin/debezium-connector-postgres-2.6.1.zip"
+  default = "plugin/debezium-connector-postgres.zip"
 }
