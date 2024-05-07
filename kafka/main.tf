@@ -27,7 +27,7 @@ resource "google_compute_instance" "kafka" {
 #!/bin/bash
 export KAFKA_CLUSTER_ID=${random_uuid.rand.id}
 export KAFKA_NODE_ID=${each.key}
-export KAFKA_VOTERS=${join(",", [for id, server in var.kafka-bootstrap-servers : format("%s@%s:9093", id, server) if id != each.key])}
+export KAFKA_VOTERS=${join(",", [for id, server in var.kafka-bootstrap-servers : format("%s@%s:9093", id, server)])}
 ${file("./kafka/setup.sh")}
 EOF
 }
