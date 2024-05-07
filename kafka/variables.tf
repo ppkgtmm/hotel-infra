@@ -19,5 +19,5 @@ variable "kafka_bootstrap_servers" {
     1 : "kafka1"
     # , 2 : "kafka2" 
   }
-  type = map(number, string)
+  type = map
 }
