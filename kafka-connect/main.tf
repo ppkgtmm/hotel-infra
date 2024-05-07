@@ -23,12 +23,12 @@ resource "aws_mskconnect_custom_plugin" "plugin" {
 }
 
 resource "aws_mskconnect_connector" "hotel-connect" {
-  name                 = "hotel-connector"
+  name                 = "hotel-connect"
   kafkaconnect_version = "2.7.1"
   capacity {
     autoscaling {
-      max_worker_count = 1
       min_worker_count = 1
+      max_worker_count = 2
     }
   }
   kafka_cluster {
