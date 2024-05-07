@@ -4,7 +4,7 @@ resource "aws_mskconnect_worker_configuration" "hotel-connect" {
 }
 
 data "aws_s3_bucket" "bucket" {
-  bucket = var.bucket-id
+  bucket = var.s3-bucket-name
 }
 
 data "aws_iam_role" "connect-role" {
