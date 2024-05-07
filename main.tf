@@ -74,7 +74,7 @@ module "kafka" {
   source            = "./kafka"
   subnets           = data.aws_subnets.subnets.ids
   security-group-id = data.aws_security_group.default.id
-  depends_on        = [module.data-connector]
+  depends_on        = [module.connector]
 }
 
 module "kafka-connect" {
