@@ -45,3 +45,11 @@ variable "replication-password" {
   type      = string
   sensitive = true
 }
+
+variable "s3-bucket-name" {
+  type = string
+}
+
+variable "plugin-path" {
+  default = "plugin/debezium-connector-postgres-2.6.1.zip"
+}
