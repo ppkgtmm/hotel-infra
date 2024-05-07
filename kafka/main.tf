@@ -1,8 +1,9 @@
 resource "random_uuid" "rand" {}
 
 resource "google_compute_instance" "kafka" {
+  for_each       = var.kafka-bootstrap-servers
   machine_type   = var.gcp-machine-type
-  name           = "kafka"
+  name           = each.value
   enable_display = false
   boot_disk {
     initialize_params {
@@ -11,7 +12,6 @@ resource "google_compute_instance" "kafka" {
       type  = var.gcp-disk-type
     }
   }
-  tags = ["kafka"]
   network_interface {
     network = var.gcp-network
     access_config {
@@ -26,6 +26,8 @@ resource "google_compute_instance" "kafka" {
   metadata_startup_script = <<EOF
 #!/bin/bash
 export KAFKA_CLUSTER_ID=${random_uuid.rand.id}
+export KAFKA_NODE_ID=${each.key}
+export KAFKA_VOTERS=${join(",", [for id, server in var.kafka-bootstrap-servers : format("%s@%s:9093", id, server) if id != each.key])}
 ${file("./kafka/setup.sh")}
 EOF
 }
