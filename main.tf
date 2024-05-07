@@ -80,23 +80,27 @@ module "connector" {
 }
 
 module "kafka" {
-  source            = "./kafka"
-  security-group-id = data.aws_security_group.default.id
-  subnets           = data.aws_subnets.subnets.ids
+  source           = "./kafka"
+  gcp-disk-image   = var.gcp-disk-image
+  gcp-network      = var.gcp-network
+  gcp-disk-type    = var.gcp-disk-type
+  gcp-machine-type = var.gcp-machine-type
+  depends_on       = [module.data-seeder]
 }
 
 module "kafka-connect" {
-  source               = "./kafka-connect"
-  security-group-id    = data.aws_security_group.default.id
-  subnets              = data.aws_subnets.subnets.ids
-  bucket-id            = module.data-generator.bucket-id
-  kafka-servers        = module.kafka.kafka-bootstrap-servers
-  plugin-path          = module.connector.plugin-path
-  connect-role         = var.rds-s3-role
-  source-db-host       = module.data-seeder.source-db-host
-  source-db-port       = module.data-seeder.source-db-port
-  replication-user     = var.replication-user
-  replication-password = var.replication-password
-  source-db-name       = var.source-db-name
-  depends_on           = [module.kafka]
+  source                  = "./kafka-connect"
+  gcp-disk-image          = var.gcp-disk-image
+  gcp-network             = var.gcp-network
+  kafka-bootstrap-servers = module.kafka.kafka-bootstrap-servers
+  depends_on              = [module.kafka]
+}
+
+resource "aws_security_group_rule" "allow-kafka-connect" {
+  security_group_id = data.aws_security_group.default.id
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = "5432"
+  to_port           = "5432"
+  cidr_blocks       = ["${module.kafka-connect.kafka-connect-ip}/32"]
 }
