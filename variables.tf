@@ -72,5 +72,5 @@ variable "gcp-disk-type" {
 }
 
 variable "gcp-machine-type" {
-  default = "e2-micros"
+  default = "e2-micro"
 }
