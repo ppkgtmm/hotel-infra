@@ -1,20 +1,7 @@
-variable "gcp-disk-image" {
-  type = string
+variable "subnets" {
+  type = set(string)
 }
 
-variable "gcp-disk-type" {
+variable "security-group-id" {
   type = string
-}
-
-variable "gcp-machine-type" {
-  type = string
-}
-
-variable "gcp-network" {
-  type = string
-}
-
-variable "kafka-bootstrap-servers" {
-  default = { 1 : "kafka1", 2 : "kafka2" }
-  type    = map
 }
