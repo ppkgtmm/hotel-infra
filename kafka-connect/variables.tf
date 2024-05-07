@@ -6,6 +6,6 @@ variable "gcp-network" {
   type = string
 }
 
-variable "kafka-server" {
+variable "kafka-bootstrap-servers" {
   type = string
 }
