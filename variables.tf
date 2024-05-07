@@ -45,3 +45,32 @@ variable "replication-password" {
   type      = string
   sensitive = true
 }
+
+variable "gcp-project-id" {
+  type      = string
+  sensitive = true
+}
+
+variable "gcp-region" {
+  default = "us-central1"
+}
+
+variable "gcp-zone" {
+  default = "us-central1-a"
+}
+
+variable "gcp-disk-image" {
+  default = "ubuntu-2204-jammy-v20240501"
+}
+
+variable "gcp-network" {
+  default = "default"
+}
+
+variable "gcp-disk-type" {
+  default = "pd-standard"
+}
+
+variable "gcp-machine-type" {
+  default = "e2-micros"
+}
