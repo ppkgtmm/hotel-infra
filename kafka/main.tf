@@ -1,14 +1,14 @@
 resource "random_uuid" "rand" {}
 
 resource "google_compute_instance" "kafka" {
-  machine_type   = "e2-micro"
+  machine_type   = var.gcp-machine-type
   name           = "kafka"
   enable_display = false
   boot_disk {
     initialize_params {
       image = var.gcp-disk-image
       size  = 10
-      type  = "pd-standard"
+      type  = var.gcp-disk-type
     }
   }
   tags = ["kafka"]
