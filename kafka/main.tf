@@ -5,6 +5,7 @@ resource "google_compute_instance" "kafka" {
   machine_type   = var.gcp_machine_type
   name           = each.value
   enable_display = false
+  tags           = ["kafka"]
   boot_disk {
     initialize_params {
       image = var.gcp_disk_image
