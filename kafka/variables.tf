@@ -15,5 +15,6 @@ variable "gcp-network" {
 }
 
 variable "kafka-bootstrap-servers" {
-  default = ["kafka1", "kafka2", "kafka3"]
+  default = { 1 : "kafka1", 2 : "kafka2", 3 : "kafka3" }
+  type    = map
 }
