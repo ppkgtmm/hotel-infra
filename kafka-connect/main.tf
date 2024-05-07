@@ -24,6 +24,13 @@ resource "google_compute_instance" "kafka-connect" {
   metadata_startup_script = <<EOF
 #!/bin/bash
 export KAFKA_SERVERS=${var.kafka_bootstrap_servers}
+export DB_NAME=${var.source_db_name}
+export DB_HOST=${var.source_db_host}
+export DB_PORT=${var.source_db_port}
+export DB_USER=${var.source_db_username}
+export DB_PASSWORD=${var.source_db_password}
+export DBZ_USER=${var.replication_user}
+export DBZ_PASSWORD=${var.replication_password}
 ${file("./kafka-connect/setup.sh")}
 EOF
 }
