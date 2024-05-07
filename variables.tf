@@ -1,55 +1,55 @@
-variable "aws-region" {
+variable "aws_region" {
   default = "ap-south-1"
 }
 
-variable "aws-zone" {
+variable "aws_zone" {
   default = "ap-south-1a"
 }
 
-variable "source-db-name" {
+variable "source_db_name" {
   default = "hotel"
 }
 
-variable "source-db-username" {
+variable "source_db_username" {
   type      = string
   sensitive = true
 }
 
-variable "source-db-password" {
+variable "source_db_password" {
   type      = string
   sensitive = true
 }
 
-variable "aws-ami" {
+variable "aws_ami" {
   default = "ami-05e00961530ae1b55"
 }
 
-variable "aws-instance-type" {
+variable "aws_instance_type" {
   default = "t2.micro"
 }
 
-variable "rds-s3-role" {
+variable "rds_s3_role" {
   default = "rds-s3-access"
 }
 
-variable "s3-role" {
+variable "s3_role" {
   default = "s3-access"
 }
 
-variable "replication-user" {
+variable "replication_user" {
   type      = string
   sensitive = true
 }
 
-variable "replication-password" {
+variable "replication_password" {
   type      = string
   sensitive = true
 }
 
-variable "s3-bucket-name" {
+variable "s3_bucket_name" {
   type = string
 }
 
-variable "plugin-path" {
+variable "plugin_path" {
   default = "plugin/debezium-connector-postgres.zip"
 }
