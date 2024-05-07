@@ -1,37 +1,37 @@
-variable "aws-region" {
+variable "aws_region" {
   type = string
 }
 
-variable "aws-zone" {
+variable "aws_zone" {
   type = string
 }
 
-variable "data-seeder-role" {
+variable "data_seeder_role" {
   type = string
 }
 
-variable "source-db-name" {
+variable "source_db_name" {
   type = string
 }
 
-variable "source-db-username" {
+variable "source_db_username" {
   type      = string
   sensitive = true
 }
 
-variable "source-db-password" {
+variable "source_db_password" {
   type      = string
   sensitive = true
 }
 
-variable "s3-bucket-name" {
+variable "s3_bucket_name" {
   type = string
 }
 
-variable "aws-ami" {
+variable "aws_ami" {
   type = string
 }
 
-variable "aws-instance-type" {
+variable "aws_instance_type" {
   type = string
 }
