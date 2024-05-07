@@ -24,7 +24,7 @@ variable "source-db-password" {
   sensitive = true
 }
 
-variable "bucket-id" {
+variable "s3-bucket-name" {
   type = string
 }
 
