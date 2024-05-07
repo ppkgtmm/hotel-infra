@@ -1,5 +1,5 @@
-resource "google_compute_instance" "kafka-connect" {
-  machine_type   = "e2-micro"
+resource "google_compute_instance" "kafka_connect" {
+  machine_type   = var.gcp_machine_type
   name           = "kafka-connect"
   enable_display = false
   tags           = ["kafka-connect"]
@@ -7,7 +7,7 @@ resource "google_compute_instance" "kafka-connect" {
     initialize_params {
       image = var.gcp_disk_image
       size  = 10
-      type  = "pd-standard"
+      type  = var.gcp_disk_type
     }
   }
   network_interface {
@@ -35,7 +35,7 @@ ${file("./kafka-connect/setup.sh")}
 EOF
 }
 
-resource "google_compute_firewall" "name" {
+resource "google_compute_firewall" "allow_kafka" {
   network     = var.gcp_network
   name        = "allow-kafka-internal"
   target_tags = ["kafka"]
