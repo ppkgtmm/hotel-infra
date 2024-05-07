@@ -76,3 +76,19 @@ module "kafka" {
   security-group-id = data.aws_security_group.default.id
   depends_on        = [module.data-connector]
 }
+
+module "kafka-connect" {
+  source               = "./kafka-connect"
+  security-group-id    = data.aws_security_group.default.id
+  subnets              = data.aws_subnets.subnets.ids
+  bucket-id            = module.data-generator.bucket-id
+  kafka-servers        = module.kafka.kafka-servers
+  plugin-path          = module.connector.plugin-path
+  connect-role         = var.rds-s3-role
+  source-db-host       = module.data-seeder.source-db-host
+  source-db-port       = module.data-seeder.source-db-port
+  replication-user     = var.replication-user
+  replication-password = var.replication-password
+  source-db-name       = var.source-db-name
+  depends_on           = [module.kafka]
+}
