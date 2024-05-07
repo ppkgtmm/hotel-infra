@@ -19,6 +19,12 @@ provider "aws" {
   region = var.aws-region
 }
 
+provider "google" {
+  project = var.gcp-project-id
+  region  = var.gcp-region
+  zone    = var.gcp-zone
+}
+
 provider "random" {}
 
 data "aws_caller_identity" "current" {}
