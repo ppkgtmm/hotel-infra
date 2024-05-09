@@ -12,6 +12,10 @@ terraform {
       source  = "hashicorp/random"
       version = "3.6.1"
     }
+    http = {
+      source  = "hashicorp/http"
+      version = "3.4.2"
+    }
   }
 }
 
@@ -110,6 +114,10 @@ module "connector" {
   replication_password = var.replication_password
   gcp_region           = var.gcp_region
   gcp_bucket_name      = var.gcp_bucket_name
-  kafka_connect_server = module.kafka_connect.kafka_connect_ip
+  kafka_connect_server = "${module.kafka_connect.kafka_connect_ip}:8083"
   depends_on           = [module.kafka_connect]
+}
+
+data "http" "name" {
+  url = module.connector.cloud_function_uri
 }
