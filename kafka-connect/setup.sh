@@ -19,12 +19,12 @@ psql "postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME" -f query.sq
 cd kafka_2.13-3.7.0
 wget -O config.properties https://github.com/ppkgtmm/hotel-infra/raw/main/kafka-connect/connect.properties
 cat >> config.properties << EOF
-echo "plugin.path=$PLUGIN_PATH" >> config.properties
-echo "bootstrap.servers=$KAFKA_SERVERS" >> config.properties
-echo "database.hostname=$DB_HOST" >> config.properties
-echo "database.user=$DBZ_USER" >> config.properties
-echo "database.password=$DBZ_PASSWORD" >> config.properties
-echo "database.dbname=$DB_NAME" >> config.properties
-echo "topic.prefix=$DB_NAME" >> config.properties
+plugin.path=$PLUGIN_PATH
+bootstrap.servers=$KAFKA_SERVERS
+database.hostname=$DB_HOST
+database.user=$DBZ_USER
+database.password=$DBZ_PASSWORD
+database.dbname=$DB_NAME
+topic.prefix=$DB_NAME
 EOF
 bin/connect-distributed.sh config.properties
