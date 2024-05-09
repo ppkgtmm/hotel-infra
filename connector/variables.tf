@@ -1,47 +1,33 @@
-variable "aws-zone" {
+variable "gcp_region" {
   type = string
 }
 
-variable "aws-ami" {
+variable "gcp_bucket_name" {
   type = string
 }
 
-variable "aws-instance-type" {
+variable "function_zip_file" {
   type = string
 }
 
-variable "connector-role" {
+variable "source_db_host" {
   type = string
 }
 
-variable "source-db-host" {
+variable "kafka_connect_server" {
   type = string
 }
 
-variable "source-db-port" {
+variable "source_db_name" {
   type = string
 }
 
-variable "source-db-user" {
+variable "replication_user" {
   type      = string
   sensitive = true
 }
 
-variable "source-db-password" {
-  type      = string
-  sensitive = true
-}
-
-variable "source-db-name" {
-  type = string
-}
-
-variable "replication-user" {
-  type      = string
-  sensitive = true
-}
-
-variable "replication-password" {
+variable "replication_password" {
   type      = string
   sensitive = true
 }
