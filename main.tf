@@ -114,10 +114,7 @@ module "connector" {
   replication_password = var.replication_password
   gcp_region           = var.gcp_region
   gcp_bucket_name      = var.gcp_bucket_name
-  kafka_connect_server = "${module.kafka_connect.kafka_connect_ip}:8083"
+  kafka_connect_server = "http://${module.kafka_connect.kafka_connect_ip}:8083"
   depends_on           = [module.kafka_connect]
 }
 
-data "http" "invoke_cloud_function" {
-  url = module.connector.cloud_function_uri
-}
