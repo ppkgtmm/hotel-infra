@@ -26,7 +26,8 @@ resource "google_cloudfunctions2_function" "connector" {
 }
 
 resource "google_storage_bucket_object" "name" {
-  name    = "trigger"
-  content = "just to trigger cloud function"
-  bucket  = var.gcp_bucket_name
+  name       = "trigger"
+  content    = "just to trigger cloud function"
+  bucket     = var.gcp_bucket_name
+  depends_on = [google_cloudfunctions2_function.connector]
 }
