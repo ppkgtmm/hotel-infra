@@ -78,3 +78,7 @@ variable "gcp_disk_type" {
 variable "gcp_machine_type" {
   default = "e2-micro"
 }
+
+variable "gcp_bucket_name" {
+  type = string
+}
