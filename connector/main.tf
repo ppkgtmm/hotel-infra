@@ -21,5 +21,5 @@ resource "google_cloud_run_service_iam_member" "member" {
   location = google_cloudfunctions2_function.connector.location
   service  = google_cloudfunctions2_function.connector.name
   role     = "roles/run.invoker"
-  member   = "allAuthenticatedUsers"
+  member   = "allUsers"
 }
