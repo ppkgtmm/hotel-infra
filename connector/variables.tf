@@ -7,7 +7,7 @@ variable "gcp_bucket_name" {
 }
 
 variable "function_zip_file" {
-  type = string
+  default = "hotel-connector.zip"
 }
 
 variable "source_db_host" {
