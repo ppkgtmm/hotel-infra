@@ -1,20 +1,18 @@
-resource "aws_instance" "connector" {
-  instance_type        = var.aws-instance-type
-  ami                  = var.aws-ami
-  user_data            = <<EOF
-#!/bin/bash
-export DB_HOST=${var.source-db-host}
-export DB_PORT=${var.source-db-port}
-export DB_USER=${var.source-db-user}
-export DB_PASSWORD=${var.source-db-password}
-export DB_NAME=${var.source-db-name}
-export DBZ_USER=${var.replication-user}
-export DBZ_PASSWORD=${var.replication-password}
-${file("./connector/setup.sh")}
-EOF
-  iam_instance_profile = var.connector-role
-  tags = {
-    Name = "connector-setup"
+resource "google_cloudfunctions2_function" "connector" {
+  name     = "register-connector"
+  location = var.gcp_region
+  build_config {
+    runtime     = "python312"
+    entry_point = "register_source_database"
+    source {
+      storage_source {
+        bucket = var.gcp_bucket_name
+        object = var.function_zip_file
+      }
+    }
   }
-  availability_zone = var.aws-zone
+  service_config {
+    max_instance_count    = 1
+    environment_variables = { DB_HOST : var.source_db_host, DBZ_USER : var.replication_user, DBZ_PASSWORD : var.replication_password, DB_NAME : var.source_db_name, KAFKA_CONNECT_SERVER : var.kafka_connect_server }
+  }
 }
