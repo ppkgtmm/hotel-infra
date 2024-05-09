@@ -106,18 +106,18 @@ resource "aws_security_group_rule" "allow_kafka_connect" {
   cidr_blocks       = ["${module.kafka_connect.kafka_connect_ip}/32"]
 }
 
-module "connector" {
-  source               = "./connector"
-  source_db_host       = module.data_seeder.source_db_host
-  source_db_name       = var.source_db_name
-  replication_user     = var.replication_user
-  replication_password = var.replication_password
-  gcp_region           = var.gcp_region
-  gcp_bucket_name      = var.gcp_bucket_name
-  kafka_connect_server = "${module.kafka_connect.kafka_connect_ip}:8083"
-  depends_on           = [module.kafka_connect]
-}
+# module "connector" {
+#   source               = "./connector"
+#   source_db_host       = module.data_seeder.source_db_host
+#   source_db_name       = var.source_db_name
+#   replication_user     = var.replication_user
+#   replication_password = var.replication_password
+#   gcp_region           = var.gcp_region
+#   gcp_bucket_name      = var.gcp_bucket_name
+#   kafka_connect_server = "${module.kafka_connect.kafka_connect_ip}:8083"
+#   depends_on           = [module.kafka_connect]
+# }
 
-data "http" "name" {
-  url = module.connector.cloud_function_uri
-}
+# data "http" "name" {
+#   url = module.connector.cloud_function_uri
+# }
