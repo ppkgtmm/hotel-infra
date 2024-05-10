@@ -74,6 +74,14 @@ module "kafka" {
   depends_on     = [module.data_seeder]
 }
 
+module "kafka_connect" {
+  source                  = "./kafka-connect"
+  kafka_bootstrap_servers = module.kafka.kafka_bootstrap_servers
+  kafka_connect_role      = var.kafka_connect_role
+  aws_ami                 = var.aws_ami
+  aws_zone                = var.aws_zone
+  depends_on              = [module.kafka]
+}
 
 # module "kafka" {
 #   source           = "./kafka"
