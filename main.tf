@@ -67,46 +67,11 @@ module "data_seeder" {
   depends_on         = [module.data_generator]
 }
 
-resource "aws_msk_serverless_cluster" "kafka" {
-  cluster_name = "hotel-kafka"
-  vpc_config {
-    subnet_ids         = slice(data.aws_subnets.subnets.ids, 0, 2)
-    security_group_ids = [data.aws_security_group.default.id]
-  }
-  client_authentication {
-    sasl {
-      iam {
-        enabled = true
-      }
-    }
-  }
-  depends_on = [module.data_seeder]
-}
-
-data "aws_msk_bootstrap_brokers" "kafka_brokers" {
-  cluster_arn = aws_msk_serverless_cluster.kafka.arn
-}
-
-resource "aws_instance" "kafka_connect" {
-  instance_type = "t2.medium"
-  ami           = var.aws_ami
-  user_data     = <<EOF
-#!/bin/bash
-export KAFKA_SERVERS=${data.aws_msk_bootstrap_brokers.kafka_brokers.bootstrap_brokers_sasl_iam}
-export DB_NAME=${var.source_db_name}
-export DB_HOST=${module.data_seeder.source_db_host}
-export DB_PORT=${module.data_seeder.source_db_port}
-export DB_USER=${var.source_db_username}
-export DB_PASSWORD=${var.source_db_password}
-export DBZ_USER=${var.replication_user}
-export DBZ_PASSWORD=${var.replication_password}
-${file("./kafka-connect/setup.sh")}
-EOF
-  tags = {
-    Name = "kafka-connect"
-  }
-  availability_zone    = var.aws_zone
-  iam_instance_profile = var.kafka_connect_role
+module "kafka" {
+  source         = "./kafka"
+  aws_subnet_ids = data.aws_subnets.subnets.ids
+  aws_vpc_id     = data.aws_vpc.default.id
+  depends_on     = [module.data_seeder]
 }
 
 

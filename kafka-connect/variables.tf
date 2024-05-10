@@ -1,16 +1,12 @@
-variable "gcp_disk_image" {
+variable "aws_ami" {
   type = string
 }
 
-variable "gcp_network" {
+variable "aws_zone" {
   type = string
 }
 
-variable "gcp_disk_type" {
-  type = string
-}
-
-variable "gcp_machine_type" {
+variable "kafka_connect_role" {
   type = string
 }
 
