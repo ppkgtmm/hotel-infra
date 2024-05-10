@@ -68,10 +68,10 @@ module "data_seeder" {
 }
 
 module "kafka" {
-  source         = "./kafka"
-  aws_subnet_ids = data.aws_subnets.subnets.ids
-  aws_vpc_id     = data.aws_vpc.default.id
-  depends_on     = [module.data_seeder]
+  source             = "./kafka"
+  aws_subnet_ids     = data.aws_subnets.subnets.ids
+  aws_security_group = data.aws_security_group.default.id
+  depends_on         = [module.data_seeder]
 }
 
 module "kafka_connect" {
