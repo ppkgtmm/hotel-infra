@@ -1,17 +1,13 @@
-variable "gcp_region" {
+variable "s3_bucket_name" {
   type = string
 }
 
-variable "gcp_bucket_name" {
+variable "connector_role" {
   type = string
 }
 
 variable "function_zip_file" {
   default = "hotel-connector.zip"
-}
-
-variable "source_db_host" {
-  type = string
 }
 
 variable "kafka_connect_server" {
@@ -30,4 +26,30 @@ variable "replication_user" {
 variable "replication_password" {
   type      = string
   sensitive = true
+}
+
+variable "source_db_address" {
+  type = string
+}
+
+variable "source_db_port" {
+  type = string
+}
+
+variable "source_db_username" {
+  type      = string
+  sensitive = true
+}
+
+variable "source_db_password" {
+  type      = string
+  sensitive = true
+}
+
+variable "aws_security_group" {
+  type = string
+}
+
+variable "aws_subnet_ids" {
+  type = list(string)
 }

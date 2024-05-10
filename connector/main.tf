@@ -1,33 +1,30 @@
-resource "google_cloudfunctions2_function" "connector" {
-  name     = "register-connector"
-  location = var.gcp_region
-  build_config {
-    runtime     = "python312"
-    entry_point = "register_source_database"
-    source {
-      storage_source {
-        bucket = var.gcp_bucket_name
-        object = var.function_zip_file
-      }
-    }
+resource "aws_lambda_function" "hotel_connector" {
+  function_name = "hotel_connector"
+  role          = var.connector_role
+  handler       = "lambda_handler"
+  runtime       = "python3.12"
+  s3_bucket     = var.s3_bucket_name
+  s3_key        = var.function_zip_file
+  skip_destroy  = false
+  vpc_config {
+    security_group_ids = [var.aws_security_group]
+    subnet_ids         = var.aws_subnet_ids
   }
-  service_config {
-    max_instance_count    = 1
-    environment_variables = { DB_HOST : var.source_db_host, DBZ_USER : var.replication_user, DBZ_PASSWORD : var.replication_password, DB_NAME : var.source_db_name, KAFKA_CONNECT_SERVER : var.kafka_connect_server }
-  }
-  event_trigger {
-    event_type   = "google.cloud.storage.object.v1.finalized"
-    retry_policy = "RETRY_POLICY_RETRY"
-    event_filters {
-      attribute = "bucket"
-      value     = var.gcp_bucket_name
+  environment {
+    variables = {
+      DB_NAME              = var.source_db_name
+      DB_HOST              = "${var.source_db_address}:${var.source_db_port}"
+      DB_USER              = var.source_db_username
+      DB_PASSWORD          = var.source_db_password
+      DBZ_USER             = var.replication_user
+      DBZ_PASSWORD         = var.replication_password
+      KAFKA_CONNECT_SERVER = "http://${var.kafka_connect_server}:8083"
     }
   }
 }
 
-resource "google_storage_bucket_object" "trigger" {
-  name       = "trigger"
-  content    = "just to trigger cloud function"
-  bucket     = var.gcp_bucket_name
-  depends_on = [google_cloudfunctions2_function.connector]
+resource "aws_lambda_invocation" "invocation" {
+  function_name = aws_lambda_function.hotel_connector.function_name
+  input         = jsonencode()
+  depends_on    = [aws_lambda_function.hotel_connector]
 }
