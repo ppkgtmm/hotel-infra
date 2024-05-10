@@ -1,23 +1,7 @@
-variable "gcp_disk_image" {
-  type = string
+variable "aws_subnet_ids" {
+  type = set(string)
 }
 
-variable "gcp_disk_type" {
+variable "aws_vpc_id" {
   type = string
-}
-
-variable "gcp_machine_type" {
-  type = string
-}
-
-variable "gcp_network" {
-  type = string
-}
-
-variable "kafka_bootstrap_servers" {
-  default = {
-    1 : "kafka1"
-    # , 2 : "kafka2" 
-  }
-  type = map
 }

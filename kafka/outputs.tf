@@ -1,3 +1,3 @@
 output "kafka_bootstrap_servers" {
-  value = join(",", formatlist("%s:9092", values(var.kafka_bootstrap_servers)))
+  value = data.aws_msk_bootstrap_brokers.kafka_brokers.bootstrap_brokers_sasl_iam
 }
