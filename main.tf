@@ -96,7 +96,7 @@ module "connector" {
   source_db_name       = var.source_db_name
   replication_user     = var.replication_user
   replication_password = var.replication_password
-  connector_role       = var.s3_role
+  connector_role       = var.connector_role
   depends_on           = [module.kafka_connect]
 }
 
