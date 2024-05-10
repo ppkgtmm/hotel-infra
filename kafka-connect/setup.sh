@@ -18,4 +18,4 @@ echo "plugin.path=$PLUGIN_PATH" >> config.properties
 echo "bootstrap.servers=$KAFKA_SERVERS" >> config.properties
 wget https://github.com/aws/aws-msk-iam-auth/releases/download/v1.1.1/aws-msk-iam-auth-1.1.1-all.jar
 cp aws-msk-iam-auth-1.1.1-all.jar libs/aws-msk-iam-auth-1.1.1-all.jar
-bin/connect-distributed.sh config.properties
+KAFKA_HEAP_OPTS="-Xms512m -Xmx1g" bin/connect-distributed.sh config.properties
