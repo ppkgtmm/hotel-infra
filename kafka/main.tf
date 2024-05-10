@@ -1,7 +1,7 @@
 resource "aws_msk_serverless_cluster" "kafka" {
   cluster_name = "hotel-kafka"
   vpc_config {
-    subnet_ids         = slice(var.aws_subnet_ids, 0, 2)
+    subnet_ids         = slice(tolist(var.aws_subnet_ids), 0, 2)
     security_group_ids = [var.aws_vpc_id]
   }
   client_authentication {
