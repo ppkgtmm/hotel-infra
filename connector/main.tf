@@ -1,6 +1,10 @@
+data "aws_iam_role" "connector_role" {
+  name = var.connector_role
+}
+
 resource "aws_lambda_function" "hotel_connector" {
   function_name = "hotel_connector"
-  role          = var.connector_role
+  role          = data.aws_iam_role.connector_role.arn
   handler       = "lambda_handler"
   runtime       = "python3.12"
   s3_bucket     = var.s3_bucket_name
