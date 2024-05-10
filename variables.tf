@@ -36,6 +36,10 @@ variable "s3_role" {
   default = "s3-access"
 }
 
+variable "kafka_connect_role" {
+  default = "kafka-access"
+}
+
 variable "replication_user" {
   type      = string
   sensitive = true
