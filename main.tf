@@ -83,6 +83,23 @@ module "kafka_connect" {
   depends_on              = [module.kafka]
 }
 
+module "connector" {
+  source               = "./connector"
+  s3_bucket_name       = var.s3_bucket_name
+  aws_security_group   = data.aws_security_group.default.id
+  kafka_connect_server = module.kafka_connect.kafka_connect_ip
+  aws_subnet_ids       = data.aws_subnets.subnets.ids
+  source_db_address    = module.data_seeder.source_db_host
+  source_db_port       = module.data_seeder.source_db_port
+  source_db_username   = var.source_db_username
+  source_db_password   = var.source_db_password
+  source_db_name       = var.source_db_name
+  replication_user     = var.replication_user
+  replication_password = var.replication_password
+  connector_role       = var.s3_role
+  depends_on           = [module.kafka_connect]
+}
+
 # module "kafka" {
 #   source           = "./kafka"
 #   gcp_machine_type = var.gcp_machine_type
