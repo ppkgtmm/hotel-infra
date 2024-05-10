@@ -15,4 +15,6 @@ cd kafka_2.13-3.7.0
 wget -O config.properties https://github.com/ppkgtmm/hotel-infra/raw/main/kafka-connect/connect.properties
 echo "plugin.path=$PLUGIN_PATH" >> config.properties
 echo "bootstrap.servers=$KAFKA_SERVERS" >> config.properties
+wget https://github.com/aws/aws-msk-iam-auth/releases/download/v1.1.1/aws-msk-iam-auth-1.1.1-all.jar
+cp aws-msk-iam-auth-1.1.1-all.jar libs/aws-msk-iam-auth-1.1.1-all.jar
 bin/connect-distributed.sh config.properties
