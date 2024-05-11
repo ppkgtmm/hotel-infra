@@ -19,7 +19,6 @@ resource "aws_db_instance" "source_db" {
   username             = var.source_db_username
   password             = var.source_db_password
   allocated_storage    = 5
-  publicly_accessible  = true
   availability_zone    = var.aws_zone
   parameter_group_name = aws_db_parameter_group.source_db.name
 }
