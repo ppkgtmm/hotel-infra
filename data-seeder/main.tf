@@ -6,6 +6,14 @@ resource "aws_db_parameter_group" "source_db" {
     value        = "1"
     apply_method = "pending-reboot"
   }
+  parameter {
+    name  = "log_replication_commands"
+    value = 1
+  }
+  parameter {
+    name  = "log_statement"
+    value = "all"
+  }
 }
 
 resource "aws_db_instance" "source_db" {
