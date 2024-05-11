@@ -71,7 +71,6 @@ module "kafka" {
   source             = "./kafka"
   aws_subnet_ids     = data.aws_subnets.subnets.ids
   aws_security_group = data.aws_security_group.default.id
-  depends_on         = [module.data_seeder]
 }
 
 module "kafka_connect" {
@@ -97,7 +96,7 @@ module "connector" {
   replication_user     = var.replication_user
   replication_password = var.replication_password
   connector_role       = var.connector_role
-  depends_on           = [module.kafka_connect]
+  depends_on           = [module.data_seeder, module.kafka_connect]
 }
 
 # module "kafka" {
