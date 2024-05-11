@@ -42,6 +42,12 @@ data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
 }
 
+module "kafka" {
+  source             = "./kafka"
+  aws_subnet_ids     = data.aws_subnets.subnets.ids
+  aws_security_group = data.aws_security_group.default.id
+}
+
 module "data_generator" {
   source              = "./data-generator"
   aws_zone            = var.aws_zone
@@ -65,12 +71,6 @@ module "data_seeder" {
   aws_instance_type  = var.aws_instance_type
   data_seeder_role   = var.rds_s3_role
   depends_on         = [module.data_generator]
-}
-
-module "kafka" {
-  source             = "./kafka"
-  aws_subnet_ids     = data.aws_subnets.subnets.ids
-  aws_security_group = data.aws_security_group.default.id
 }
 
 module "kafka_connect" {
