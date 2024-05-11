@@ -40,7 +40,7 @@ data "aws_subnets" "subnets" {
 
 data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
-  name = "default"
+  name   = "default"
 }
 
 module "data_generator" {
