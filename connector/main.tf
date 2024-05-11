@@ -16,13 +16,14 @@ resource "aws_lambda_function" "hotel_connector" {
   }
   environment {
     variables = {
-      DB_NAME              = var.source_db_name
-      DB_HOST              = "${var.source_db_address}:${var.source_db_port}"
-      DB_USER              = var.source_db_username
-      DB_PASSWORD          = var.source_db_password
-      DBZ_USER             = var.replication_user
-      DBZ_PASSWORD         = var.replication_password
-      KAFKA_CONNECT_SERVER = "http://${var.kafka_connect_server}:8083"
+      DB_NAME                = var.source_db_name
+      DB_HOST                = "${var.source_db_address}:${var.source_db_port}"
+      DB_USER                = var.source_db_username
+      DB_PASSWORD            = var.source_db_password
+      DBZ_USER               = var.replication_user
+      DBZ_PASSWORD           = var.replication_password
+      KAFKA_CONNECT_SERVER   = "http://${var.kafka_connect_server}:8083"
+      KAFKA_BOOTSTRAP_SERVER = var.kafka_bootstrap_server
     }
   }
 }
