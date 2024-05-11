@@ -10,10 +10,6 @@ variable "function_zip_file" {
   default = "hotel-connector.zip"
 }
 
-variable "kafka_bootstrap_server" {
-  type = string
-}
-
 variable "kafka_connect_server" {
   type = string
 }
