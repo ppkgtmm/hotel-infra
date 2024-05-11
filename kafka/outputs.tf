@@ -1,3 +1,3 @@
 output "kafka_bootstrap_servers" {
-  value = aws_msk_cluster.kafka.bootstrap_brokers_tls
+  value = data.aws_msk_bootstrap_brokers.kafka_brokers.bootstrap_brokers_sasl_iam
 }
