@@ -42,12 +42,6 @@ data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
 }
 
-module "kafka" {
-  source             = "./kafka"
-  aws_subnet_ids     = data.aws_subnets.subnets.ids
-  aws_security_group = data.aws_security_group.default.id
-}
-
 module "data_generator" {
   source              = "./data-generator"
   aws_zone            = var.aws_zone
@@ -73,6 +67,13 @@ module "data_seeder" {
   depends_on         = [module.data_generator]
 }
 
+module "kafka" {
+  source             = "./kafka"
+  aws_subnet_ids     = data.aws_subnets.subnets.ids
+  aws_security_group = data.aws_security_group.default.id
+  depends_on         = [module.data_seeder]
+}
+
 module "kafka_connect" {
   source                  = "./kafka-connect"
   kafka_bootstrap_servers = module.kafka.kafka_bootstrap_servers
@@ -96,7 +97,7 @@ module "connector" {
   replication_user     = var.replication_user
   replication_password = var.replication_password
   connector_role       = var.connector_role
-  depends_on           = [module.data_seeder, module.kafka_connect]
+  depends_on           = [module.kafka_connect]
 }
 
 # module "kafka" {
