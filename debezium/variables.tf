@@ -39,3 +39,7 @@ variable "replication_password" {
 variable "source_db_name" {
   type = string
 }
+
+variable "debezium_role" {
+  type = string
+}
