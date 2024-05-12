@@ -10,10 +10,6 @@ variable "data_generator_role" {
   type = string
 }
 
-variable "account_id" {
-  type = string
-}
-
 variable "aws_ami" {
   type = string
 }
