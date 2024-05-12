@@ -54,6 +54,14 @@ module "data_seeder" {
   depends_on         = [module.data_generator]
 }
 
+
+module "kafka" {
+  source             = "./kafka"
+  aws_security_group = data.aws_security_group.default.id
+  aws_subnets        = data.aws_subnets.subnets.ids
+  depends_on         = [module.data_generator]
+}
+
 module "connector" {
   source               = "./connector"
   aws_security_group   = data.aws_security_group.default.id
@@ -69,10 +77,6 @@ module "connector" {
   depends_on           = [module.data_seeder]
 }
 
-resource "aws_sqs_queue" "hotel_queue" {
-  name = "hotel-queue"
-}
-
 module "debezium" {
   source               = "./debezium"
   source_db_host       = module.data_seeder.source_db_host
@@ -80,11 +84,10 @@ module "debezium" {
   replication_user     = var.replication_user
   replication_password = var.replication_password
   source_db_name       = var.source_db_name
-  aws_region           = var.aws_region
   aws_zone             = var.aws_zone
   aws_ami              = var.aws_ami
   aws_instance_type    = var.aws_instance_type
-  sqs_queue_url        = aws_sqs_queue.hotel_queue.url
+  kafka_server         = module.kafka.bootstrap_brokers_tls
   debezium_role        = var.sqs_role
-  depends_on           = [module.connector, aws_sqs_queue.hotel_queue]
+  depends_on           = [module.connector]
 }
