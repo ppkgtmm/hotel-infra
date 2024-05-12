@@ -54,6 +54,10 @@ variable "s3_bucket_name" {
   type = string
 }
 
+variable "s3_ec2_role" {
+  default = "s3-ec2-access"
+}
+
 variable "gcp_project_id" {
   type      = string
   sensitive = true
