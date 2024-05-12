@@ -82,6 +82,7 @@ module "debezium" {
   replication_user     = var.replication_user
   replication_password = var.replication_password
   source_db_name       = var.source_db_name
+  aws_region           = var.aws_region
   aws_zone             = var.aws_zone
   aws_ami              = var.aws_ami
   aws_instance_type    = var.aws_instance_type
