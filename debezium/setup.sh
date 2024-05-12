@@ -13,4 +13,5 @@ debezium.source.database.password=$DB_PASSWORD
 debezium.source.database.dbname=$DB_NAME
 debezium.source.topic.prefix=$DB_NAME
 EOF
+mv application.properties conf/
 chmod +x run.sh && ./run.sh
