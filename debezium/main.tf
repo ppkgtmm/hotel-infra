@@ -7,6 +7,7 @@ resource "aws_instance" "debezium" {
   }
   user_data = <<EOF
 #!/bin/bash
+export AWS_REGION=${var.aws_region}
 export DB_HOST=${var.source_db_host}
 export DB_PORT=${var.source_db_port}
 export DB_USER=${var.replication_user}
