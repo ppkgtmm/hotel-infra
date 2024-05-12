@@ -60,6 +60,21 @@ module "data_seeder" {
   depends_on         = [module.data_generator]
 }
 
+module "connector" {
+  source               = "./connector"
+  aws_security_group   = data.aws_security_group.default.id
+  aws_subnet_ids       = data.aws_subnets.subnets.ids
+  connector_role       = var.s3_role
+  s3_bucket_name       = var.s3_bucket_name
+  source_db_address    = module.data_seeder.source_db_host
+  source_db_username   = var.source_db_username
+  source_db_password   = var.source_db_password
+  source_db_name       = var.source_db_name
+  replication_user     = var.replication_user
+  replication_password = var.replication_password
+  depends_on           = [module.data_seeder]
+}
+
 module "debezium" {
   source               = "./debezium"
   source_db_host       = module.data_seeder.source_db_host
@@ -70,5 +85,5 @@ module "debezium" {
   aws_zone             = var.aws_zone
   aws_ami              = var.aws_ami
   aws_instance_type    = var.aws_instance_type
-  depends_on           = [module.seeder]
+  depends_on           = [module.connector]
 }
