@@ -4,14 +4,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.47.0"
     }
-    # google = {
-    #   source  = "hashicorp/google"
-    #   version = "5.27.0"
-    # }
-    # random = {
-    #   source  = "hashicorp/random"
-    #   version = "3.6.1"
-    # }
   }
 }
 
@@ -68,38 +60,38 @@ module "data_seeder" {
   depends_on         = [module.data_generator]
 }
 
-module "kafka" {
-  source             = "./kafka"
-  aws_subnet_ids     = data.aws_subnets.subnets.ids
-  aws_security_group = data.aws_security_group.default.id
-  depends_on         = [module.data_seeder]
-}
 
-module "kafka_connect" {
-  source                  = "./kafka-connect"
-  kafka_bootstrap_servers = module.kafka.kafka_bootstrap_servers
-  kafka_connect_role      = var.kafka_connect_role
-  aws_ami                 = var.aws_ami
-  aws_zone                = var.aws_zone
-  depends_on              = [module.kafka]
-}
+# module "kafka" {
+#   source             = "./kafka"
+#   aws_subnet_ids     = data.aws_subnets.subnets.ids
+#   aws_security_group = data.aws_security_group.default.id
+# }
 
-module "connector" {
-  source               = "./connector"
-  s3_bucket_name       = var.s3_bucket_name
-  aws_security_group   = data.aws_security_group.default.id
-  kafka_connect_server = module.kafka_connect.kafka_connect_ip
-  aws_subnet_ids       = data.aws_subnets.subnets.ids
-  source_db_address    = module.data_seeder.source_db_host
-  source_db_port       = module.data_seeder.source_db_port
-  source_db_username   = var.source_db_username
-  source_db_password   = var.source_db_password
-  source_db_name       = var.source_db_name
-  replication_user     = var.replication_user
-  replication_password = var.replication_password
-  connector_role       = var.connector_role
-  depends_on           = [module.kafka_connect]
-}
+# module "kafka_connect" {
+#   source                  = "./kafka-connect"
+#   kafka_bootstrap_servers = module.kafka.kafka_bootstrap_servers
+#   kafka_connect_role      = var.kafka_connect_role
+#   aws_ami                 = var.aws_ami
+#   aws_zone                = var.aws_zone
+#   depends_on              = [module.kafka]
+# }
+
+# module "connector" {
+#   source               = "./connector"
+#   s3_bucket_name       = var.s3_bucket_name
+#   aws_security_group   = data.aws_security_group.default.id
+#   kafka_connect_server = module.kafka_connect.kafka_connect_ip
+#   aws_subnet_ids       = data.aws_subnets.subnets.ids
+#   source_db_address    = module.data_seeder.source_db_host
+#   source_db_port       = module.data_seeder.source_db_port
+#   source_db_username   = var.source_db_username
+#   source_db_password   = var.source_db_password
+#   source_db_name       = var.source_db_name
+#   replication_user     = var.replication_user
+#   replication_password = var.replication_password
+#   connector_role       = var.connector_role
+#   depends_on           = [module.kafka_connect]
+# }
 
 # module "kafka" {
 #   source           = "./kafka"
