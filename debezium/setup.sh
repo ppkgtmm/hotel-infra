@@ -6,6 +6,7 @@ cd debezium-server
 mkdir -p data/
 wget -O application.properties https://github.com/ppkgtmm/hotel-infra/raw/main/debezium/application.properties
 cat >> application.properties <<EOF
+debezium.sink.sqs.region=$AWS_REGION
 debezium.source.database.hostname=$DB_HOST
 debezium.source.database.port=$DB_PORT
 debezium.source.database.user=$DB_USER
