@@ -36,8 +36,12 @@ variable "s3_role" {
   default = "s3-access"
 }
 
-variable "kafka_connect_role" {
-  default = "kafka-access"
+variable "s3_ec2_role" {
+  default = "s3-ec2-access"
+}
+
+variable "sqs_role" {
+  default = "sqs-access"
 }
 
 variable "replication_user" {
@@ -52,10 +56,6 @@ variable "replication_password" {
 
 variable "s3_bucket_name" {
   type = string
-}
-
-variable "s3_ec2_role" {
-  default = "s3-ec2-access"
 }
 
 variable "gcp_project_id" {
