@@ -75,6 +75,10 @@ module "connector" {
   depends_on           = [module.data_seeder]
 }
 
+resource "aws_sqs_queue" "hotel_queue" {
+  name = "hotel-queue"
+}
+
 module "debezium" {
   source               = "./debezium"
   source_db_host       = module.data_seeder.source_db_host
@@ -86,5 +90,6 @@ module "debezium" {
   aws_zone             = var.aws_zone
   aws_ami              = var.aws_ami
   aws_instance_type    = var.aws_instance_type
-  depends_on           = [module.connector]
+  sqs_queue_url        = aws_sqs_queue.hotel_queue.url
+  depends_on           = [module.connector, aws_sqs_queue.hotel_queue]
 }
