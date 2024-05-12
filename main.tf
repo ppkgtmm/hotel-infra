@@ -64,7 +64,7 @@ module "connector" {
   source               = "./connector"
   aws_security_group   = data.aws_security_group.default.id
   aws_subnet_ids       = data.aws_subnets.subnets.ids
-  connector_role       = var.s3_role
+  connector_role       = var.s3_ec2_role
   s3_bucket_name       = var.s3_bucket_name
   source_db_address    = module.data_seeder.source_db_host
   source_db_username   = var.source_db_username
