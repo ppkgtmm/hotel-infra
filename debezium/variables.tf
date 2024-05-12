@@ -14,6 +14,10 @@ variable "aws_instance_type" {
   type = string
 }
 
+variable "sqs_queue_url" {
+  type = string
+}
+
 variable "source_db_host" {
   type = string
 }
