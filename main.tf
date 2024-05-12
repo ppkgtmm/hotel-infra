@@ -33,7 +33,6 @@ module "data_generator" {
   source              = "./data-generator"
   aws_zone            = var.aws_zone
   aws_region          = var.aws_region
-  account_id          = data.aws_caller_identity.current.account_id
   aws_ami             = var.aws_ami
   aws_instance_type   = var.aws_instance_type
   data_generator_role = var.s3_role
@@ -51,14 +50,6 @@ module "data_seeder" {
   aws_ami            = var.aws_ami
   aws_instance_type  = var.aws_instance_type
   data_seeder_role   = var.rds_s3_role
-  depends_on         = [module.data_generator]
-}
-
-
-module "kafka" {
-  source             = "./kafka"
-  aws_security_group = data.aws_security_group.default.id
-  aws_subnets        = data.aws_subnets.subnets.ids
   depends_on         = [module.data_generator]
 }
 
