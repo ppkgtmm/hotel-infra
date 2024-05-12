@@ -1,7 +1,8 @@
 resource "aws_instance" "debezium" {
-  availability_zone = var.aws_zone
-  ami               = var.aws_ami
-  instance_type     = var.aws_instance_type
+  availability_zone    = var.aws_zone
+  ami                  = var.aws_ami
+  instance_type        = var.aws_instance_type
+  iam_instance_profile = var.debezium_role
   tags = {
     Name = "debezium-server"
   }
