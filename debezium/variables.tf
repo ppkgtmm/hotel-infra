@@ -6,15 +6,11 @@ variable "aws_zone" {
   type = string
 }
 
-variable "aws_region" {
-  type = string
-}
-
 variable "aws_instance_type" {
   type = string
 }
 
-variable "sqs_queue_url" {
+variable "kafka_server" {
   type = string
 }
 
