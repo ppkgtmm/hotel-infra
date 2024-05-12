@@ -91,5 +91,6 @@ module "debezium" {
   aws_ami              = var.aws_ami
   aws_instance_type    = var.aws_instance_type
   sqs_queue_url        = aws_sqs_queue.hotel_queue.url
+  debezium_role        = var.sqs_role
   depends_on           = [module.connector, aws_sqs_queue.hotel_queue]
 }
