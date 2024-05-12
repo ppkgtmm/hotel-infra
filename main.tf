@@ -59,3 +59,16 @@ module "data_seeder" {
   data_seeder_role   = var.rds_s3_role
   depends_on         = [module.data_generator]
 }
+
+module "debezium" {
+  source               = "./debezium"
+  source_db_host       = module.data_seeder.source_db_host
+  source_db_port       = module.data_seeder.source_db_port
+  replication_user     = var.replication_user
+  replication_password = var.replication_password
+  source_db_name       = var.source_db_name
+  aws_zone             = var.aws_zone
+  aws_ami              = var.aws_ami
+  aws_instance_type    = var.aws_instance_type
+  depends_on           = [module.seeder]
+}
