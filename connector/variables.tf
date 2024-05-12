@@ -10,10 +10,6 @@ variable "function_zip_file" {
   default = "hotel-connector.zip"
 }
 
-variable "kafka_connect_server" {
-  type = string
-}
-
 variable "source_db_name" {
   type = string
 }
@@ -29,10 +25,6 @@ variable "replication_password" {
 }
 
 variable "source_db_address" {
-  type = string
-}
-
-variable "source_db_port" {
   type = string
 }
 
