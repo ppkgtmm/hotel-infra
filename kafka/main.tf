@@ -5,7 +5,7 @@ resource "aws_msk_cluster" "hotel_kafka" {
 
   broker_node_group_info {
     instance_type  = "kafka.t3.small"
-    client_subnets = var.aws_subnets
+    client_subnets = slice(tolist(var.aws_subnets), 0, 2)
     storage_info {
       ebs_storage_info {
         volume_size = 10
