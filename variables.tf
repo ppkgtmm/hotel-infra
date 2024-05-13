@@ -2,7 +2,7 @@ variable "aws_region" {
   default = "ap-south-1"
 }
 
-variable "aws_zone" {
+variable "availability_zone" {
   default = "ap-south-1a"
 }
 
@@ -20,16 +20,12 @@ variable "source_db_password" {
   sensitive = true
 }
 
-variable "aws_ami" {
+variable "ubuntu_ami" {
   default = "ami-05e00961530ae1b55"
 }
 
-variable "aws_instance_type" {
+variable "instance_type" {
   default = "t2.micro"
-}
-
-variable "rds_s3_role" {
-  default = "rds-s3-access"
 }
 
 variable "s3_ec2_role" {
@@ -87,14 +83,6 @@ variable "gcp_bucket_name" {
   type = string
 }
 
-variable "location_file" {
-  default = "https://github.com/ppkgtmm/location/raw/main/states_provinces.csv"
-}
-
-variable "seed" {
-  default = 42
-}
-
-variable "seed_dir" {
+variable "seed_directory" {
   default = "seeds/"
 }
