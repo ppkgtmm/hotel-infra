@@ -51,7 +51,10 @@ resource "aws_instance" "kafka" {
   tags = {
     Name = "kafka-server-${count.index + 1}"
   }
-  private_ip = aws_network_interface.kafka_network_interface.private_ip_list[count.index]
+  network_interface {
+    network_interface_id = aws_network_interface.kafka_network_interface.id
+    device_index         = count.index
+  }
   user_data = templatefile("./kafka/initialize.sh", {
     NODE_ID          = count.index + 1,
     VOTERS           = join(",", [for idx, ip in aws_network_interface.kafka_network_interface.private_ip_list : format("%s@%s:9092", idx + 1, ip)])
