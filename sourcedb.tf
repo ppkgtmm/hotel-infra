@@ -51,17 +51,19 @@ locals {
   data_seeder_variables = {
     GIT_REPO = "https://github.com/ppkgtmm/hotel-seed.git"
     ENVIRONMENT = {
-      SEED_DIR    = var.seed_directory
-      S3_BUCKET   = var.s3_bucket_name
-      AWS_REGION  = var.aws_region
-      DB_USER     = aws_db_instance.source_db.username
-      DB_PASSWORD = aws_db_instance.source_db.password
-      DB_ENDPOINT = aws_db_instance.source_db.endpoint
-      DB_NAME     = aws_db_instance.source_db.db_name
+      LOCATION_FILE = "https://github.com/ppkgtmm/location/raw/main/states_provinces.csv"
+      SEED          = 42
+      SEED_DIR      = var.seed_directory
+      S3_BUCKET     = var.s3_bucket_name
+      AWS_REGION    = var.aws_region
+      DB_USER       = aws_db_instance.source_db.username
+      DB_PASSWORD   = aws_db_instance.source_db.password
+      DB_ENDPOINT   = aws_db_instance.source_db.endpoint
+      DB_NAME       = aws_db_instance.source_db.db_name
     }
   }
 }
-resource "aws_instance" "data-seeder" {
+resource "aws_instance" "data_seeder" {
   instance_type        = var.instance_type
   ami                  = var.ubuntu_ami
   user_data            = templatefile("./initialize.sh", local.data_seeder_variables)
