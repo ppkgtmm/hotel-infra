@@ -10,7 +10,7 @@ resource "aws_lambda_function" "data_generator" {
   s3_bucket     = var.s3_bucket_name
   s3_key        = var.function_zip_file
   skip_destroy  = false
-  timeout       = 10
+  timeout       = 60
   vpc_config {
     security_group_ids = [var.aws_security_group]
     subnet_ids         = var.aws_subnet_ids
