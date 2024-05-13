@@ -90,3 +90,15 @@ variable "gcp_machine_type" {
 variable "gcp_bucket_name" {
   type = string
 }
+
+variable "location_file" {
+  default = "https://github.com/ppkgtmm/location/raw/main/states_provinces.csv"
+}
+
+variable "seed" {
+  default = 42
+}
+
+variable "seed_dir" {
+  default = "seeds/"
+}
