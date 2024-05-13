@@ -40,10 +40,6 @@ resource "aws_network_interface" "kafka_network_interface" {
   security_groups   = [data.aws_security_group.default.id]
 }
 
-locals {
-  kafka_servers = { for idx, ip in aws_network_interface.kafka_network_interface.private_ip_list : idx + 1 => format("%s:9092", ip) }
-}
-
 resource "random_uuid" "cluster_id" {}
 
 resource "aws_instance" "kafka" {
