@@ -38,6 +38,7 @@ resource "aws_network_interface" "kafka_network_interface" {
   subnet_id         = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
   private_ips_count = 3
   security_groups   = [data.aws_security_group.default.id]
+  depends_on        = [aws_instance.data_seeder]
 }
 
 resource "random_uuid" "cluster_id" {}
@@ -56,6 +57,7 @@ resource "aws_instance" "kafka" {
     VOTERS           = join(",", [for idx, ip in aws_network_interface.kafka_network_interface.private_ip_list : format("%s@%s:9092", idx + 1, ip)])
     KAFKA_CLUSTER_ID = random_uuid.cluster_id.id
   })
+  depends_on = [aws_network_interface.kafka_network_interface]
 }
 
 locals {
@@ -76,5 +78,6 @@ resource "aws_instance" "debezium" {
   tags = {
     Name = "debezium-server"
   }
-  user_data = templatefile("./debezium/initialize.sh", local.debezium_server_variables)
+  user_data  = templatefile("./debezium/initialize.sh", local.debezium_server_variables)
+  depends_on = [aws_lambda_invocation.invocation]
 }
