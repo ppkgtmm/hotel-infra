@@ -28,10 +28,6 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "s3_ec2_role" {
-  default = "s3-ec2-access"
-}
-
 variable "sqs_role" {
   default = "sqs-access"
 }
