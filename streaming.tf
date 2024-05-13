@@ -36,7 +36,7 @@ resource "aws_lambda_invocation" "invocation" {
 
 resource "aws_network_interface" "kafka_network_interface" {
   subnet_id         = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
-  private_ips_count = 3
+  private_ips_count = 4
   security_groups   = [data.aws_security_group.default.id]
   depends_on        = [aws_instance.data_seeder]
 }
@@ -47,7 +47,7 @@ resource "aws_instance" "kafka" {
   availability_zone = var.availability_zone
   ami               = var.ubuntu_ami
   instance_type     = var.instance_type
-  count             = aws_network_interface.kafka_network_interface.private_ips_count
+  count             = aws_network_interface.kafka_network_interface.private_ips_count - 1
   tags = {
     Name = "kafka-server-${count.index + 1}"
   }
@@ -82,5 +82,5 @@ resource "aws_instance" "debezium" {
     Name = "debezium-server"
   }
   user_data  = templatefile("./debezium/initialize.sh", local.debezium_server_variables)
-  depends_on = [aws_lambda_invocation.invocation]
+  depends_on = [aws_lambda_invocation.invocation, aws_instance.kafka]
 }
