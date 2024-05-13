@@ -32,10 +32,6 @@ variable "rds_s3_role" {
   default = "rds-s3-access"
 }
 
-variable "s3_role" {
-  default = "s3-access"
-}
-
 variable "s3_ec2_role" {
   default = "s3-ec2-access"
 }
