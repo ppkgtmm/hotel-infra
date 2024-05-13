@@ -46,21 +46,21 @@ resource "aws_instance" "kafka" {
   availability_zone = var.availability_zone
   ami               = var.ubuntu_ami
   instance_type     = var.instance_type
-  for_each          = local.kafka_servers
+  count             = aws_network_interface.kafka_network_interface.private_ips_count
   tags = {
-    Name = "kafka-server-${each.key}"
+    Name = "kafka-server-${count.index + 1}"
   }
-  private_ip = each.value
+  private_ip = aws_network_interface.kafka_network_interface.private_ip_list[count.index]
   user_data = templatefile("./kafka/initialize.sh", {
-    NODE_ID          = each.key,
-    VOTERS           = join(",", [for idx, server in local.kafka_servers : format("%s@%s", idx, server)])
-    KAFKA_CLUSTER_ID = random_uuid.cluster_id
+    NODE_ID          = count.index + 1,
+    VOTERS           = join(",", [for idx, ip in aws_network_interface.kafka_network_interface.private_ip_list : format("%s@%s:9092", idx + 1, ip)])
+    KAFKA_CLUSTER_ID = random_uuid.cluster_id.id
   })
 }
 
 locals {
   debezium_server_variables = {
-    KAFKA_SERVER = join(",", local.kafka_servers)
+    KAFKA_SERVER = join(",", [for ip in aws_network_interface.kafka_network_interface.private_ip_list : format("%s:9092", ip)])
     DB_HOST      = aws_db_instance.source_db.address
     DB_PORT      = aws_db_instance.source_db.port
     DB_USER      = var.replication_user
