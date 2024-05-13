@@ -35,7 +35,7 @@ resource "aws_lambda_invocation" "invocation" {
 }
 
 resource "aws_network_interface" "kafka_network_interface" {
-  subnet_id         = slice(data.aws_subnets.subnets.id, 0, 1)
+  subnet_id         = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
   private_ips_count = 3
   security_groups   = [data.aws_security_group.default.id]
 }
