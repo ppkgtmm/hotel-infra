@@ -31,12 +31,14 @@ data "aws_security_group" "default" {
 
 module "data_generator" {
   source              = "./data-generator"
-  aws_zone            = var.aws_zone
   aws_region          = var.aws_region
-  aws_ami             = var.aws_ami
-  aws_instance_type   = var.aws_instance_type
-  data_generator_role = var.s3_role
+  data_generator_role = var.s3_ec2_role
   s3_bucket_name      = var.s3_bucket_name
+  seed                = var.seed
+  seed_dir            = var.seed_dir
+  location_file       = var.location_file
+  aws_security_group  = data.aws_security_group.default.id
+  aws_subnet_ids      = data.aws_subnets.subnets.ids
 }
 
 module "data_seeder" {
