@@ -5,6 +5,8 @@ locals {
       LOCATION_FILE = "https://github.com/ppkgtmm/location/raw/main/states_provinces.csv"
       SEED          = 42
       SEED_DIR      = var.seed_directory
+      S3_BUCKET     = var.s3_bucket_name
+      AWS_REGION    = var.aws_region
     }
   }
 }
