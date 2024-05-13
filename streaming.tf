@@ -33,3 +33,26 @@ resource "aws_lambda_invocation" "invocation" {
   input         = jsonencode({})
   depends_on    = [aws_lambda_function.hotel_connector]
 }
+
+locals {
+  debezium_server_variables = {
+    KAFKA_SERVER = ""
+    DB_HOST      = aws_db_instance.source_db.address
+    DB_PORT      = aws_db_instance.source_db.port
+    DB_USER      = var.replication_user
+    DB_PASSWORD  = var.replication_password
+    DB_NAME      = var.source_db_name
+  }
+}
+
+
+resource "aws_instance" "debezium" {
+  availability_zone = var.availability_zone
+  ami               = var.ubuntu_ami
+  instance_type     = var.instance_type
+  # iam_instance_profile = var.debezium_role
+  tags = {
+    Name = "debezium-server"
+  }
+  user_data = templatefile("./debezium/initialize.sh", local.debezium_server_variables)
+}
