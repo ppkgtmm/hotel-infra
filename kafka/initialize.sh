@@ -8,5 +8,6 @@ node.id=${NODE_ID}
 controller.quorum.voters=${VOTERS}
 EOF
 export _JAVA_OPTIONS="-Djava.net.preferIPv4Stack=true"
+export KAFKA_HEAP_OPTS="-Xmx258m -Xms256m"
 bin/kafka-storage.sh format -t ${KAFKA_CLUSTER_ID} -c config.properties
 bin/kafka-server-start.sh config.properties 
