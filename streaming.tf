@@ -46,7 +46,7 @@ resource "random_uuid" "cluster_id" {}
 resource "aws_instance" "kafka" {
   availability_zone = var.availability_zone
   ami               = var.ubuntu_ami
-  instance_type     =  "t2.small"
+  instance_type     = var.instance_type
   count             = 3
   tags = {
     Name = "kafka-server-${count.index + 1}"
