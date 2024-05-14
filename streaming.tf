@@ -66,6 +66,7 @@ resource "aws_instance" "kafka" {
 locals {
   debezium_server_variables = {
     KAFKA_SERVER = join(",", formatlist("%s:9092", aws_network_interface.kafka_network_interface[*].private_ip))
+    KAFKA_SERVER = join(",", formatlist("%s:9091", aws_network_interface.kafka_network_interface[*].private_ip))
     DB_HOST      = aws_db_instance.source_db.address
     DB_PORT      = aws_db_instance.source_db.port
     DB_USER      = var.replication_user
