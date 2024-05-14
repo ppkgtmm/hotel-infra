@@ -14,6 +14,4 @@ debezium.source.database.dbname=${DB_NAME}
 debezium.source.topic.prefix=${DB_NAME}
 EOF
 mv application.properties conf/
-wget https://github.com/aws/aws-msk-iam-auth/releases/download/v1.1.1/aws-msk-iam-auth-1.1.1-all.jar
-mv aws-msk-iam-auth-1.1.1-all.jar lib/
 chmod +x run.sh && ./run.sh
