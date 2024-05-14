@@ -35,10 +35,10 @@ resource "aws_lambda_invocation" "invocation" {
 }
 
 resource "aws_network_interface" "kafka_network_interface" {
-  subnet_id         = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
-  private_ips_count = 4
-  security_groups   = [data.aws_security_group.default.id]
-  depends_on        = [aws_instance.data_seeder]
+  subnet_id       = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
+  count           = 3
+  security_groups = [data.aws_security_group.default.id]
+  depends_on      = [aws_instance.data_seeder]
 }
 
 resource "random_uuid" "cluster_id" {}
@@ -47,17 +47,17 @@ resource "aws_instance" "kafka" {
   availability_zone = var.availability_zone
   ami               = var.ubuntu_ami
   instance_type     = var.instance_type
-  count             = aws_network_interface.kafka_network_interface.private_ips_count - 1
+  count             = 3
   tags = {
     Name = "kafka-server-${count.index + 1}"
   }
   network_interface {
-    network_interface_id = aws_network_interface.kafka_network_interface.id
-    device_index         = count.index
+    network_interface_id = aws_network_interface.kafka_network_interface[count.index].id
+    device_index         = 0
   }
   user_data = templatefile("./kafka/initialize.sh", {
     NODE_ID          = count.index + 1,
-    VOTERS           = join(",", [for idx, ip in aws_network_interface.kafka_network_interface.private_ip_list : format("%s@%s:9092", idx + 1, ip)])
+    VOTERS           = join(",", formatlist("%s@%s:9092", range(1, 4), aws_network_interface.kafka_network_interface[*].private_ip))
     KAFKA_CLUSTER_ID = random_uuid.cluster_id.id
   })
   depends_on = [aws_network_interface.kafka_network_interface]
@@ -65,7 +65,7 @@ resource "aws_instance" "kafka" {
 
 locals {
   debezium_server_variables = {
-    KAFKA_SERVER = join(",", [for ip in aws_network_interface.kafka_network_interface.private_ip_list : format("%s:9092", ip)])
+    KAFKA_SERVER = join(",", formatlist("%s:9092", aws_network_interface.kafka_network_interface[*].private_ip))
     DB_HOST      = aws_db_instance.source_db.address
     DB_PORT      = aws_db_instance.source_db.port
     DB_USER      = var.replication_user
