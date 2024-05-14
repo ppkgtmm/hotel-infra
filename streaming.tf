@@ -57,7 +57,7 @@ resource "aws_instance" "kafka" {
   }
   user_data = templatefile("./kafka/initialize.sh", {
     NODE_ID          = count.index + 1
-    VOTERS           = join(",", formatlist("%s@%s:9092", range(1, 4), aws_network_interface.kafka_network_interface[*].private_ip))
+    VOTERS           = join(",", formatlist("%s@%s:9093", range(1, 4), aws_network_interface.kafka_network_interface[*].private_ip))
     KAFKA_CLUSTER_ID = random_uuid.cluster_id.id
   })
   depends_on = [aws_network_interface.kafka_network_interface]
