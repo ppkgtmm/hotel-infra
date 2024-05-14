@@ -6,5 +6,6 @@ cat >> config.properties <<EOF
 node.id=${NODE_ID}
 controller.quorum.voters=${VOTERS}
 EOF
-bin/kafka-storage.sh format -t ${KAFKA_CLUSTER_ID} -c config.properties
-bin/kafka-server-start.sh config.properties
+export _JAVA_OPTIONS="-Djava.net.preferIPv4Stack=true"
+bin/kafka-storage.sh format -t ${KAFKA_CLUSTER_ID} -c config.properties -Xmx256m
+bin/kafka-server-start.sh config.properties -Xmx256m
