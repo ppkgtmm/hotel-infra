@@ -34,38 +34,66 @@ resource "aws_lambda_invocation" "invocation" {
   depends_on    = [aws_lambda_function.hotel_connector]
 }
 
-resource "aws_network_interface" "kafka_network_interface" {
-  subnet_id       = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
-  count           = 3
-  security_groups = [data.aws_security_group.default.id]
-  depends_on      = [aws_instance.data_seeder]
+# resource "aws_network_interface" "kafka_network_interface" {
+#   subnet_id       = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
+#   count           = 3
+#   security_groups = [data.aws_security_group.default.id]
+#   depends_on      = [aws_instance.data_seeder]
+# }
+
+# resource "random_uuid" "cluster_id" {}
+
+# resource "aws_instance" "kafka" {
+#   availability_zone = var.availability_zone
+#   ami               = var.ubuntu_ami
+#   instance_type     =  "t2.micro"
+#   count             = 3
+#   tags = {
+#     Name = "kafka-server-${count.index + 1}"
+#   }
+#   network_interface {
+#     network_interface_id = aws_network_interface.kafka_network_interface[count.index].id
+#     device_index         = 0
+#   }
+#   user_data = templatefile("./kafka/initialize.sh", {
+#     NODE_ID          = count.index + 1
+#     VOTERS           = join(",", formatlist("%s@%s:9092", range(1, 4), aws_network_interface.kafka_network_interface[*].private_ip))
+#     KAFKA_CLUSTER_ID = random_uuid.cluster_id.id
+#   })
+#   depends_on = [aws_network_interface.kafka_network_interface]
+# }
+
+resource "aws_msk_configuration" "hotel_config" {
+  name              = "hotel-config"
+  server_properties = <<EOF
+auto.create.topics.enable=true
+num.partitions=1
+EOF
 }
 
-resource "random_uuid" "cluster_id" {}
-
-resource "aws_instance" "kafka" {
-  availability_zone = var.availability_zone
-  ami               = var.ubuntu_ami
-  instance_type     =  "t2.small"
-  count             = 3
-  tags = {
-    Name = "kafka-server-${count.index + 1}"
+resource "aws_msk_cluster" "hotel_kafka" {
+  cluster_name           = "hotel-kafka"
+  kafka_version          = "3.5.1"
+  number_of_broker_nodes = 2
+  broker_node_group_info {
+    instance_type   = "kafka.t3.small"
+    client_subnets  = slice(data.aws_subnets.subnets.ids, 0, 2)
+    security_groups = [data.aws_security_group.default.id]
+    storage_info {
+      ebs_storage_info {
+        volume_size = 10
+      }
+    }
   }
-  network_interface {
-    network_interface_id = aws_network_interface.kafka_network_interface[count.index].id
-    device_index         = 0
+  configuration_info {
+    arn      = aws_msk_configuration.hotel_config.arn
+    revision = aws_msk_configuration.hotel_config.latest_revision
   }
-  user_data = templatefile("./kafka/initialize.sh", {
-    NODE_ID          = count.index + 1
-    VOTERS           = join(",", formatlist("%s@%s:9092", range(1, 4), aws_network_interface.kafka_network_interface[*].private_ip))
-    KAFKA_CLUSTER_ID = random_uuid.cluster_id.id
-  })
-  depends_on = [aws_network_interface.kafka_network_interface]
 }
 
 locals {
   debezium_server_variables = {
-    KAFKA_SERVER = join(",", formatlist("%s:9092", aws_network_interface.kafka_network_interface[*].private_ip))
+    KAFKA_SERVER = aws_msk_cluster.hotel_kafka.bootstrap_brokers_tls
     DB_HOST      = aws_db_instance.source_db.address
     DB_PORT      = aws_db_instance.source_db.port
     DB_USER      = var.replication_user
@@ -75,12 +103,13 @@ locals {
 }
 
 resource "aws_instance" "debezium" {
-  availability_zone = var.availability_zone
-  ami               = var.ubuntu_ami
-  instance_type     = var.instance_type
+  availability_zone    = var.availability_zone
+  ami                  = var.ubuntu_ami
+  instance_type        = var.instance_type
+  iam_instance_profile = "kafka-access"
   tags = {
     Name = "debezium-server"
   }
   user_data  = templatefile("./debezium/initialize.sh", local.debezium_server_variables)
-  depends_on = [aws_lambda_invocation.invocation, aws_instance.kafka]
+  depends_on = [aws_lambda_invocation.invocation, aws_msk_cluster.hotel_kafka]
 }
