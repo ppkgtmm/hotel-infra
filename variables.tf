@@ -49,3 +49,17 @@ variable "s3_bucket_name" {
 variable "seed_directory" {
   default = "seeds/"
 }
+
+variable "warehouse_db_name" {
+  default = "hotel"
+}
+
+variable "warehouse_db_username" {
+  type      = string
+  sensitive = true
+}
+
+variable "warehouse_db_password" {
+  type      = string
+  sensitive = true
+}
