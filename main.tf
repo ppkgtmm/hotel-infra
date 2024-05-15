@@ -40,7 +40,7 @@ data "aws_iam_role" "connector_role" {
 resource "aws_lambda_function" "hotel_connector" {
   function_name = "hotel_connector"
   role          = data.aws_iam_role.connector_role.arn
-  handler       = "lambda_function.lambda_handler"
+  handler       = "entrypoint.handler"
   runtime       = "python3.12"
   s3_bucket     = var.s3_bucket_name
   s3_key        = "hotel-connector.zip"
