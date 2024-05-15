@@ -6,3 +6,7 @@ resource "aws_redshift_cluster" "hotel_dwh" {
   master_username    = var.warehouse_db_username
   master_password    = var.warehouse_db_password
 }
+
+output "redshift_endpoint" {
+  value = aws_redshift_cluster.hotel_dwh.endpoint
+}
