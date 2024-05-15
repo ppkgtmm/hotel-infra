@@ -46,39 +46,6 @@ variable "s3_bucket_name" {
   type = string
 }
 
-variable "gcp_project_id" {
-  type      = string
-  sensitive = true
-}
-
-variable "gcp_region" {
-  default = "us-central1"
-}
-
-variable "gcp_zone" {
-  default = "us-central1-a"
-}
-
-variable "gcp_disk_image" {
-  default = "ubuntu-2204-jammy-v20240501"
-}
-
-variable "gcp_network" {
-  default = "default"
-}
-
-variable "gcp_disk_type" {
-  default = "pd-standard"
-}
-
-variable "gcp_machine_type" {
-  default = "e2-micro"
-}
-
-variable "gcp_bucket_name" {
-  type = string
-}
-
 variable "seed_directory" {
   default = "seeds/"
 }
