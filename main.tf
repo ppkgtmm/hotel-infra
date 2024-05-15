@@ -58,6 +58,10 @@ resource "aws_lambda_function" "hotel_connector" {
       DB_PASSWORD  = var.source_db_password
       DBZ_USER     = var.replication_user
       DBZ_PASSWORD = var.replication_password
+      DWH_USER     = var.warehouse_db_username
+      DWH_PASSWORD = var.warehouse_db_password
+      DWH_HOST     = aws_redshift_cluster.hotel_dwh.endpoint
+      DWH_NAME     = var.warehouse_db_name
     }
   }
   depends_on = [aws_instance.data_seeder]
