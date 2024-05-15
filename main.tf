@@ -70,7 +70,7 @@ resource "aws_lambda_function" "hotel_connector" {
 resource "aws_lambda_invocation" "invocation" {
   function_name = aws_lambda_function.hotel_connector.function_name
   input         = jsonencode({})
-  depends_on    = [aws_lambda_function.hotel_connector]
+  # depends_on    = [aws_lambda_function.hotel_connector]
 }
 
 # module "connector" {
