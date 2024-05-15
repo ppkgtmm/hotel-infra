@@ -80,7 +80,7 @@ data "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_lambda_function" "hotel_connector" {
-  function_name = "hotel_connector"
+  function_name = "hotel-connector"
   role          = data.aws_iam_role.lambda_role.arn
   handler       = "entrypoint.handler"
   runtime       = "python3.12"
