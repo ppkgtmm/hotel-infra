@@ -39,5 +39,5 @@ resource "aws_lambda_function" "hotel_processor" {
 resource "aws_lambda_invocation" "processor_invocation" {
   function_name = aws_lambda_function.hotel_processor.function_name
   input         = jsonencode({})
-  # depends_on    = [aws_lambda_function.hotel_connector]
+  # depends_on    = [aws_lambda_function.hotel_processor]
 }
