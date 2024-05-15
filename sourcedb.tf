@@ -75,13 +75,13 @@ resource "aws_instance" "data_seeder" {
   depends_on        = [aws_db_instance.source_db, aws_instance.data_generator]
 }
 
-data "aws_iam_role" "connector_role" {
+data "aws_iam_role" "lambda_role" {
   name = "s3-ec2-access"
 }
 
 resource "aws_lambda_function" "hotel_connector" {
   function_name = "hotel_connector"
-  role          = data.aws_iam_role.connector_role.arn
+  role          = data.aws_iam_role.lambda_role.arn
   handler       = "entrypoint.handler"
   runtime       = "python3.12"
   s3_bucket     = var.s3_bucket_name
@@ -100,10 +100,6 @@ resource "aws_lambda_function" "hotel_connector" {
       DB_PASSWORD  = var.source_db_password
       DBZ_USER     = var.replication_user
       DBZ_PASSWORD = var.replication_password
-      DWH_USER     = var.warehouse_db_username
-      DWH_PASSWORD = var.warehouse_db_password
-      DWH_HOST     = aws_redshift_cluster.hotel_dwh.endpoint
-      DWH_NAME     = var.warehouse_db_name
     }
   }
   depends_on = [aws_instance.data_seeder]
