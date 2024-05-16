@@ -11,15 +11,11 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
+provider "aws" { region = var.aws_region }
 
 provider "random" {}
 
-data "aws_vpc" "default" {
-  default = true
-}
+data "aws_vpc" "default" { default = true }
 
 data "aws_subnets" "subnets" {
   filter {
