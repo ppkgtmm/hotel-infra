@@ -14,7 +14,7 @@ resource "aws_lambda_function" "hotel_connector" {
   timeout       = 10
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
+    subnet_ids         = data.aws_subnets.subnets.ids
   }
   environment {
     variables = {
@@ -46,7 +46,7 @@ resource "aws_lambda_function" "hotel_processor" {
   timeout       = 10
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
+    subnet_ids         = data.aws_subnets.subnets.ids
   }
   environment {
     variables = {
