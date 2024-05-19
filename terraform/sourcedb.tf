@@ -14,7 +14,7 @@ locals {
 resource "aws_instance" "data_generator" {
   instance_type        = var.instance_type
   ami                  = var.ubuntu_ami
-  user_data            = templatefile("./initialize.sh", local.data_generator_variables)
+  user_data            = templatefile("../initialize.sh", local.data_generator_variables)
   iam_instance_profile = "s3-access"
   tags = {
     Name = "data-generator"
@@ -66,7 +66,7 @@ locals {
 resource "aws_instance" "data_seeder" {
   instance_type        = var.instance_type
   ami                  = var.ubuntu_ami
-  user_data            = templatefile("./initialize.sh", local.data_seeder_variables)
+  user_data            = templatefile("../initialize.sh", local.data_seeder_variables)
   iam_instance_profile = "rds-s3-access"
   tags = {
     Name = "data-seeder"
