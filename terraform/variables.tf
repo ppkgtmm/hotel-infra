@@ -28,10 +28,6 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "sqs_role" {
-  default = "sqs-access"
-}
-
 variable "replication_user" {
   type      = string
   sensitive = true
