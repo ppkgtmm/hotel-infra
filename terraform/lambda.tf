@@ -74,6 +74,7 @@ data "aws_iam_role" "execution_role" {
 
 resource "aws_lambda_function" "hotel_submit" {
   function_name = "hotel-submit"
+  role          = data.aws_iam_role.lambda_role.arn
   handler       = "entrypoint.handler"
   runtime       = "python3.12"
   s3_bucket     = var.s3_bucket_name
