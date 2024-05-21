@@ -65,7 +65,7 @@ resource "aws_lambda_invocation" "processor_invocation" {
 }
 
 data "aws_iam_role" "submit_role" {
-  name = "s3-emr-access"
+  name = "emr-serverless-access"
 }
 
 data "aws_iam_role" "execution_role" {
@@ -97,6 +97,7 @@ resource "aws_lambda_function" "hotel_submit" {
       REGION         = var.aws_region
       APPLICATION_ID = aws_emrserverless_application.hotel_stream.id
       EXECUTION_ROLE = data.aws_iam_role.execution_role.arn
+      SFN_ROLE       = data.aws_iam_role.submit_role.arn
     }
   }
 }
