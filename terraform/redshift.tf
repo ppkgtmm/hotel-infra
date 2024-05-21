@@ -7,7 +7,3 @@ resource "aws_redshift_cluster" "hotel_dwh" {
   master_password     = var.warehouse_db_password
   skip_final_snapshot = true
 }
-
-output "redshift_endpoint" {
-  value = aws_redshift_cluster.hotel_dwh.endpoint
-}
