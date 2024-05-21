@@ -1,4 +1,4 @@
-resource "aws_subnet" "hotel_private_subnet" {
+resource "aws_subnet" "private_subnet" {
   vpc_id                  = data.aws_vpc.default.id
   availability_zone       = var.availability_zone
   map_public_ip_on_launch = false
