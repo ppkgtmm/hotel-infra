@@ -33,7 +33,7 @@ resource "aws_emrserverless_application" "hotel_stream" {
       worker_configuration {
         cpu    = "1 vCPU"
         memory = "2 GB"
-        disk   = "5 GB"
+        disk   = "20 GB"
       }
     }
   }
@@ -44,7 +44,7 @@ resource "aws_emrserverless_application" "hotel_stream" {
       worker_configuration {
         cpu    = "1 vCPU"
         memory = "2 GB"
-        disk   = "5 GB"
+        disk   = "20 GB"
       }
     }
   }
