@@ -69,7 +69,7 @@ data "aws_iam_role" "submit_role" {
 }
 
 data "aws_iam_role" "execution_role" {
-  name = "redshift-access"
+  name = "redshift-s3-access"
 }
 
 resource "aws_lambda_function" "hotel_submit" {
