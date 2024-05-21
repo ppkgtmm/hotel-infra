@@ -33,7 +33,7 @@ resource "aws_emrserverless_application" "hotel_stream" {
       worker_configuration {
         cpu    = "1 vCPU"
         memory = "2 GB"
-        disk   = "10 GB"
+        disk   = "20 GB"
       }
     }
   }
@@ -44,14 +44,14 @@ resource "aws_emrserverless_application" "hotel_stream" {
       worker_configuration {
         cpu    = "1 vCPU"
         memory = "2 GB"
-        disk   = "10 GB"
+        disk   = "20 GB"
       }
     }
   }
   maximum_capacity {
     cpu    = "3 vCPU"
     memory = "6 GB"
-    disk   = "30 GB"
+    disk   = "60 GB"
   }
   network_configuration {
     security_group_ids = [data.aws_security_group.default.id]
