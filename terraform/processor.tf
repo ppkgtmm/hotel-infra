@@ -2,6 +2,7 @@ resource "aws_subnet" "hotel_private_subnet" {
   vpc_id                  = data.aws_vpc.default.id
   availability_zone       = var.availability_zone
   map_public_ip_on_launch = false
+  cidr_block              = "172.31.48.0/20"
 }
 
 resource "aws_emrserverless_application" "hotel_stream" {
