@@ -26,6 +26,28 @@ resource "aws_emrserverless_application" "hotel_stream" {
   auto_stop_configuration {
     idle_timeout_minutes = 1
   }
+  initial_capacity {
+    initial_capacity_type = "Driver"
+    initial_capacity_config {
+      worker_count = 1
+      worker_configuration {
+        cpu    = "1 vCPU"
+        memory = "2 GB"
+        disk   = "5 GB"
+      }
+    }
+  }
+  initial_capacity {
+    initial_capacity_type = "Executor"
+    initial_capacity_config {
+      worker_count = 2
+      worker_configuration {
+        cpu    = "1 vCPU"
+        memory = "2 GB"
+        disk   = "5 GB"
+      }
+    }
+  }
   maximum_capacity {
     cpu    = "3 vCPU"
     memory = "6 GB"
