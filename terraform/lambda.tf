@@ -80,7 +80,7 @@ resource "aws_lambda_function" "hotel_submit" {
   s3_bucket     = var.s3_bucket_name
   s3_key        = "hotel-submit.zip"
   skip_destroy  = false
-  timeout       = 10
+  timeout       = 30
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
     subnet_ids         = data.aws_subnets.subnets.ids
