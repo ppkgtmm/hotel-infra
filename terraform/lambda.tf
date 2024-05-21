@@ -99,11 +99,9 @@ resource "aws_lambda_function" "hotel_submit" {
       EXECUTION_ROLE = data.aws_iam_role.execution_role.arn
     }
   }
-  # depends_on = [aws_redshift_cluster.hotel_dwh]
 }
 
 resource "aws_lambda_invocation" "submit_invocation" {
   function_name = aws_lambda_function.hotel_submit.function_name
   input         = jsonencode({})
-  # depends_on    = [aws_lambda_function.hotel_processor]
 }
