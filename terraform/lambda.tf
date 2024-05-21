@@ -83,7 +83,7 @@ resource "aws_lambda_function" "hotel_submit" {
   timeout       = 60
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = [aws_subnet.private_subnet.id]
+    subnet_ids         = data.aws_subnets.subnets.ids
   }
   environment {
     variables = {
