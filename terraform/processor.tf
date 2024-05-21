@@ -27,9 +27,9 @@ resource "aws_emrserverless_application" "hotel_stream" {
     idle_timeout_minutes = 1
   }
   maximum_capacity {
-    cpu    = 3
-    memory = 6
-    disk   = "20GB"
+    cpu    = "3 vCPU"
+    memory = "6 GB"
+    disk   = "20 GB"
   }
   network_configuration {
     security_group_ids = [data.aws_security_group.default.id]
