@@ -22,6 +22,10 @@ data "aws_subnets" "subnets" {
     name   = "vpc-id"
     values = [data.aws_vpc.default.id]
   }
+  filter {
+    name   = "defaultForAz"
+    values = ["true"]
+  }
 }
 
 data "aws_security_group" "default" {
