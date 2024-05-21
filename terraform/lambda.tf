@@ -83,7 +83,7 @@ resource "aws_lambda_function" "hotel_submit" {
   timeout       = 30
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = data.aws_subnets.subnets.ids
+    subnet_ids         = [aws_subnet.private_subnet.id]
   }
   environment {
     variables = {
@@ -94,7 +94,7 @@ resource "aws_lambda_function" "hotel_submit" {
       DWH_NAME       = var.warehouse_db_name
       DB_NAME        = var.source_db_name
       S3_BUCKET      = var.s3_bucket_name
-      REGION     = var.aws_region
+      REGION         = var.aws_region
       APPLICATION_ID = aws_emrserverless_application.hotel_stream.id
       EXECUTION_ROLE = data.aws_iam_role.execution_role.arn
     }
