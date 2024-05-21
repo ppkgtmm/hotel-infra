@@ -35,5 +35,5 @@ resource "aws_emrserverless_application" "hotel_stream" {
     security_group_ids = [data.aws_security_group.default.id]
     subnet_ids         = [aws_subnet.private_subnet.id]
   }
-  depends_on = [aws_instance.debezium]
+  depends_on = [aws_instance.debezium, aws_route_table_association.private_association]
 }
