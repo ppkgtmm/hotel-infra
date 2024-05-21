@@ -94,7 +94,7 @@ resource "aws_lambda_function" "hotel_submit" {
       DWH_NAME       = var.warehouse_db_name
       DB_NAME        = var.source_db_name
       S3_BUCKET      = var.s3_bucket_name
-      AWS_REGION     = var.aws_region
+      REGION     = var.aws_region
       APPLICATION_ID = aws_emrserverless_application.hotel_stream.id
       EXECUTION_ROLE = data.aws_iam_role.execution_role.arn
     }
