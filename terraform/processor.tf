@@ -9,7 +9,6 @@ resource "aws_route_table" "private_route" {
   vpc_id = data.aws_vpc.default.id
 
   route {
-    cidr_block = aws_subnet.private_subnet.cidr_block
     gateway_id = "local"
   }
 }
