@@ -33,7 +33,7 @@ resource "aws_emrserverless_application" "hotel_stream" {
   }
   network_configuration {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = [aws_subnet.hotel_private_subnet.id]
+    subnet_ids         = [aws_subnet.private_subnet.id]
   }
   depends_on = [aws_instance.debezium]
 }
