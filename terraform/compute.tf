@@ -131,7 +131,3 @@ resource "aws_instance" "debezium" {
   user_data  = templatefile("../debezium/initialize.sh", local.debezium_server_variables)
   depends_on = [aws_lambda_invocation.connector_invocation, aws_instance.kafka]
 }
-
-output "kafka_ips" {
-  value = join(",", formatlist("%s:9092", aws_instance.kafka[*].public_ip))
-}
