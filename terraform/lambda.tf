@@ -74,7 +74,7 @@ data "aws_iam_role" "execution_role" {
 
 resource "aws_lambda_function" "hotel_submit" {
   function_name = "hotel-submit"
-  role          = data.aws_iam_role.lambda_role.arn
+  role          = data.aws_iam_role.submit_role.arn
   handler       = "entrypoint.handler"
   runtime       = "python3.12"
   s3_bucket     = var.s3_bucket_name
@@ -97,7 +97,6 @@ resource "aws_lambda_function" "hotel_submit" {
       REGION         = var.aws_region
       APPLICATION_ID = aws_emrserverless_application.hotel_stream.id
       EXECUTION_ROLE = data.aws_iam_role.execution_role.arn
-      SFN_ROLE       = data.aws_iam_role.submit_role.arn
     }
   }
 }
