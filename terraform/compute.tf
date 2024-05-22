@@ -17,15 +17,9 @@ provider "random" {}
 
 data "aws_vpc" "default" { default = true }
 
-data "aws_subnets" "subnets" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-  filter {
-    name   = "defaultForAz"
-    values = ["true"]
-  }
+data "aws_subnet" "default_subnet" {
+  availability_zone = var.availability_zone
+  default_for_az    = true
 }
 
 data "aws_security_group" "default" {
@@ -86,7 +80,7 @@ resource "aws_instance" "data_seeder" {
 }
 
 resource "aws_network_interface" "kafka_network_interface" {
-  subnet_id       = slice(data.aws_subnets.subnets.ids, 0, 1)[0]
+  subnet_id       = data.aws_subnet.default_subnet.id
   count           = 3
   security_groups = [data.aws_security_group.default.id]
   depends_on      = [aws_instance.data_seeder]
