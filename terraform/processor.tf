@@ -37,10 +37,24 @@ resource "aws_vpc_endpoint" "emr_endpoint" {
   private_dns_enabled = true
 }
 
+resource "aws_eip" "emr_ip" {}
+
+resource "aws_nat_gateway" "emr_nat" {
+  subnet_id         = aws_subnet.private_subnet.id
+  connectivity_type = "public"
+  allocation_id     = aws_eip.emr_ip.allocation_id
+}
+
 resource "aws_route" "emr_route" {
   route_table_id         = data.aws_route_table.main_table.id
   destination_cidr_block = aws_subnet.private_subnet.cidr_block
   network_interface_id   = one(aws_vpc_endpoint.emr_endpoint.network_interface_ids)
+}
+
+resource "aws_route" "emr_nat" {
+  route_table_id         = aws_route_table.private_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.emr_nat.id
 }
 
 resource "aws_emrserverless_application" "hotel_stream" {
