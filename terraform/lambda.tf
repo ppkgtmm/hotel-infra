@@ -31,7 +31,7 @@ resource "aws_lambda_function" "hotel_connector" {
 resource "aws_lambda_invocation" "connector_invocation" {
   function_name = aws_lambda_function.hotel_connector.function_name
   input         = jsonencode({})
-  # depends_on    = [aws_lambda_function.hotel_connector]
+  depends_on    = [aws_lambda_function.hotel_connector]
 }
 
 resource "aws_lambda_function" "hotel_processor" {
@@ -55,13 +55,13 @@ resource "aws_lambda_function" "hotel_processor" {
       DWH_NAME     = var.warehouse_db_name
     }
   }
-  # depends_on = [aws_redshift_cluster.hotel_dwh]
+  depends_on = [aws_redshift_cluster.hotel_dwh]
 }
 
 resource "aws_lambda_invocation" "processor_invocation" {
   function_name = aws_lambda_function.hotel_processor.function_name
   input         = jsonencode({})
-  # depends_on    = [aws_lambda_function.hotel_processor]
+  depends_on    = [aws_lambda_function.hotel_processor]
 }
 
 data "aws_iam_role" "submit_role" {
