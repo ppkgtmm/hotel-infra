@@ -6,7 +6,7 @@ resource "aws_subnet" "private_subnet" {
   depends_on              = [aws_instance.debezium]
 }
 
-resource "aws_route_table" "private_route" {
+resource "aws_route_table" "private_table" {
   vpc_id = data.aws_vpc.default.id
 
   route {
@@ -17,7 +17,25 @@ resource "aws_route_table" "private_route" {
 
 resource "aws_route_table_association" "private_association" {
   subnet_id      = aws_subnet.private_subnet.id
-  route_table_id = aws_route_table.private_route.id
+  route_table_id = aws_route_table.private_table.id
+}
+
+resource "aws_network_interface" "emr_interface" {
+  subnet_id = aws_subnet.private_subnet.id
+}
+
+data "aws_route_table" "main_table" {
+  vpc_id = data.aws_vpc.default.id
+  filter {
+    name   = "association.main"
+    values = ["true"]
+  }
+}
+
+resource "aws_route" "emr_route" {
+  route_table_id         = data.aws_route_table.main_table.id
+  destination_cidr_block = aws_subnet.private_subnet.cidr_block
+  network_interface_id   = aws_network_interface.emr_interface.id
 }
 
 resource "aws_emrserverless_application" "hotel_stream" {
