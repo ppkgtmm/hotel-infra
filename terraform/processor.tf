@@ -20,22 +20,26 @@ resource "aws_route_table_association" "private_association" {
   route_table_id = aws_route_table.private_table.id
 }
 
-resource "aws_network_interface" "emr_interface" {
-  subnet_id = aws_subnet.private_subnet.id
-}
-
 data "aws_route_table" "main_table" {
   vpc_id = data.aws_vpc.default.id
   filter {
-    name   = "association.subnet-id"
-    values = [data.aws_subnet.default_subnet.id]
+    name   = "association.main"
+    values = ["true"]
   }
+}
+
+resource "aws_vpc_endpoint" "emr_endpoint" {
+  vpc_id             = data.aws_vpc.default.id
+  service_name       = "com.amazonaws.${var.aws_region}.emr-serverless"
+  subnet_ids         = [aws_subnet.private_subnet.id]
+  security_group_ids = [data.aws_security_group.default.id]
+  vpc_endpoint_type  = "Interface"
 }
 
 resource "aws_route" "emr_route" {
   route_table_id         = data.aws_route_table.main_table.id
   destination_cidr_block = aws_subnet.private_subnet.cidr_block
-  network_interface_id   = aws_network_interface.emr_interface.id
+  network_interface_id   = aws_vpc_endpoint.emr_endpoint.id
 }
 
 resource "aws_emrserverless_application" "hotel_stream" {
