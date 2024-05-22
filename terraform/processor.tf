@@ -36,10 +36,17 @@ resource "aws_vpc_endpoint" "emr_endpoint" {
   vpc_endpoint_type  = "Interface"
 }
 
+data "aws_network_interface" "emr_interface" {
+  filter {
+    name   = "subnet-id"
+    values = [aws_subnet.private_subnet.id]
+  }
+}
+
 resource "aws_route" "emr_route" {
   route_table_id         = data.aws_route_table.main_table.id
   destination_cidr_block = aws_subnet.private_subnet.cidr_block
-  network_interface_id   = aws_vpc_endpoint.emr_endpoint.network_interface_ids
+  network_interface_id   = data.aws_network_interface.emr_interface.id
 }
 
 resource "aws_emrserverless_application" "hotel_stream" {
