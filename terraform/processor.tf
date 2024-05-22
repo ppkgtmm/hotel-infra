@@ -49,11 +49,6 @@ resource "aws_emrserverless_application" "hotel_stream" {
       }
     }
   }
-  maximum_capacity {
-    cpu    = "3 vCPU"
-    memory = "6 GB"
-    disk   = "60 GB"
-  }
   network_configuration {
     security_group_ids = [data.aws_security_group.default.id]
     subnet_ids         = [aws_subnet.private_subnet.id]
