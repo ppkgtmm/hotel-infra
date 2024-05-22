@@ -27,8 +27,8 @@ resource "aws_network_interface" "emr_interface" {
 data "aws_route_table" "main_table" {
   vpc_id = data.aws_vpc.default.id
   filter {
-    name   = "association.main"
-    values = ["true"]
+    name   = "association.subnet-id"
+    values = [data.aws_subnet.default_subnet.id]
   }
 }
 
