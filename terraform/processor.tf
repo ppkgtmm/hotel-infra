@@ -39,7 +39,7 @@ resource "aws_vpc_endpoint" "emr_endpoint" {
 resource "aws_route" "emr_route" {
   route_table_id         = data.aws_route_table.main_table.id
   destination_cidr_block = aws_subnet.private_subnet.cidr_block
-  network_interface_id   = aws_vpc_endpoint.emr_endpoint.id
+  network_interface_id   = aws_vpc_endpoint.emr_endpoint.network_interface_ids
 }
 
 resource "aws_emrserverless_application" "hotel_stream" {
