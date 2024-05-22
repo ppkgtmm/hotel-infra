@@ -13,7 +13,7 @@ resource "aws_lambda_function" "hotel_connector" {
   timeout       = 10
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = data.aws_subnets.subnets.ids
+    subnet_ids         = [data.aws_subnet.default_subnet.id]
   }
   environment {
     variables = {
@@ -45,7 +45,7 @@ resource "aws_lambda_function" "hotel_processor" {
   timeout       = 10
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = data.aws_subnets.subnets.ids
+    subnet_ids         = [data.aws_subnet.default_subnet.id]
   }
   environment {
     variables = {
@@ -83,7 +83,7 @@ resource "aws_lambda_function" "hotel_submit" {
   timeout       = 10
   vpc_config {
     security_group_ids = [data.aws_security_group.default.id]
-    subnet_ids         = data.aws_subnets.subnets.ids
+    subnet_ids         = [data.aws_subnet.default_subnet.id]
   }
   environment {
     variables = {
