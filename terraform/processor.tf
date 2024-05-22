@@ -3,6 +3,7 @@ resource "aws_subnet" "private_subnet" {
   availability_zone       = var.availability_zone
   map_public_ip_on_launch = false
   cidr_block              = "172.31.48.0/20"
+  depends_on              = [aws_instance.debezium]
 }
 
 resource "aws_route_table" "private_route" {
