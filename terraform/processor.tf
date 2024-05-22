@@ -31,7 +31,7 @@ data "aws_route_table" "main_table" {
 resource "aws_vpc_endpoint" "emr_endpoint" {
   vpc_id             = data.aws_vpc.default.id
   service_name       = "com.amazonaws.${var.aws_region}.emr-serverless"
-  subnet_ids         = [aws_subnet.private_subnet.id]
+  subnet_ids         = [data.aws_subnet.default_subnet.id]
   security_group_ids = [data.aws_security_group.default.id]
   vpc_endpoint_type  = "Interface"
 }
