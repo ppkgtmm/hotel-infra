@@ -78,3 +78,9 @@ resource "aws_lambda_function" "hotel_connector" {
   }
   depends_on = [aws_instance.data_seeder]
 }
+
+resource "aws_lambda_invocation" "connector_invocation" {
+  function_name = aws_lambda_function.hotel_connector.function_name
+  input         = jsonencode({})
+  depends_on    = [aws_lambda_function.hotel_connector]
+}
