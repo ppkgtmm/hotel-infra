@@ -23,7 +23,7 @@ resource "aws_db_instance" "source_db" {
   parameter_group_name = aws_db_parameter_group.source_db.name
 }
 
-resource "aws_redshift_cluster" "hotel_dwh" {
+resource "aws_redshift_cluster" "data_warehouse" {
   node_type           = "dc2.large"
   cluster_identifier  = "data-warehouse"
   cluster_type        = "single-node"
