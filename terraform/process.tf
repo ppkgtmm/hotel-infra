@@ -25,7 +25,7 @@ resource "aws_lambda_function" "hotel_processor" {
       DWH_NAME     = var.warehouse_db_name
     }
   }
-  depends_on = [aws_redshift_cluster.hotel_dwh]
+  depends_on = [aws_redshift_cluster.data_warehouse]
 }
 
 resource "aws_lambda_invocation" "processor_invocation" {
