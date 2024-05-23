@@ -38,17 +38,6 @@ locals {
   }
 }
 
-resource "aws_instance" "debezium" {
-  availability_zone = var.availability_zone
-  ami               = var.ubuntu_ami
-  instance_type     = var.instance_type
-  tags = {
-    Name = "debezium-server"
-  }
-  user_data  = templatefile("../debezium/initialize.sh", local.debezium_server_variables)
-  depends_on = [aws_lambda_invocation.connector_invocation, aws_instance.kafka]
-}
-
 data "aws_iam_role" "lambda_role" {
   name = "s3-ec2-access"
 }
@@ -83,4 +72,15 @@ resource "aws_lambda_invocation" "connector_invocation" {
   function_name = aws_lambda_function.hotel_connector.function_name
   input         = jsonencode({})
   depends_on    = [aws_lambda_function.hotel_connector]
+}
+
+resource "aws_instance" "debezium" {
+  availability_zone = var.availability_zone
+  ami               = var.ubuntu_ami
+  instance_type     = var.instance_type
+  tags = {
+    Name = "debezium-server"
+  }
+  user_data  = templatefile("../debezium/initialize.sh", local.debezium_server_variables)
+  depends_on = [aws_lambda_invocation.connector_invocation, aws_instance.kafka]
 }
