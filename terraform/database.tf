@@ -22,3 +22,13 @@ resource "aws_db_instance" "source_db" {
   availability_zone    = var.availability_zone
   parameter_group_name = aws_db_parameter_group.source_db.name
 }
+
+resource "aws_redshift_cluster" "hotel_dwh" {
+  node_type           = "dc2.large"
+  cluster_identifier  = "data-warehouse"
+  cluster_type        = "single-node"
+  database_name       = var.warehouse_db_name
+  master_username     = var.warehouse_db_username
+  master_password     = var.warehouse_db_password
+  skip_final_snapshot = true
+}
