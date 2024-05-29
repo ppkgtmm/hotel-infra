@@ -62,3 +62,19 @@ module "data_seeder" {
   source_db_password = var.source_db_password
   depends_on         = [module.data_generator]
 }
+
+module "data_streaming" {
+  source               = "./data-streaming"
+  s3_bucket_name       = var.s3_bucket_name
+  source_db_host       = module.data_seeder.source_db_host
+  source_db_port       = module.data_seeder.source_db_port
+  source_db_username   = var.source_db_username
+  source_db_password   = var.source_db_password
+  source_db_name       = var.source_db_name
+  replication_user     = var.replication_user
+  replication_password = var.replication_password
+  client_subnets       = [data.aws_subnet.default_subnet.id]
+  security_groups      = [data.aws_security_group.default.id]
+  bootstrap_brokers    = aws_msk_cluster.hotel_kafka.bootstrap_brokers_tls
+  depends_on           = [module.data_seeder]
+}
