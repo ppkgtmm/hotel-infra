@@ -49,6 +49,10 @@ resource "aws_msk_cluster" "hotel_kafka" {
   }
   cluster_name  = "hotel-kafka"
   kafka_version = "3.5.1"
+  configuration_info {
+    arn      = aws_msk_configuration.hotel_config.arn
+    revision = aws_msk_configuration.hotel_config.latest_revision
+  }
 }
 
 module "data_generator" {
