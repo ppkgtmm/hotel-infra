@@ -48,5 +48,5 @@ resource "aws_instance" "data_seeder" {
     Name = "data-seeder"
   }
   availability_zone = var.availability_zone
-  depends_on        = [aws_db_instance.source_db, aws_instance.data_generator]
+  depends_on        = [aws_db_instance.source_db]
 }
