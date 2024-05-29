@@ -22,17 +22,30 @@ data "aws_subnet" "default_subnet" {
   default_for_az    = true
 }
 
+data "aws_subnets" "subnets" {}
+
 data "aws_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
   name   = "default"
 }
 
+resource "aws_msk_configuration" "hotel_config" {
+  kafka_versions    = ["3.5.1"]
+  name              = "hotel-config"
+  server_properties = "auto.create.topics.enable=true"
+}
+
 resource "aws_msk_cluster" "hotel_kafka" {
-  number_of_broker_nodes = 1
+  number_of_broker_nodes = 2
   broker_node_group_info {
-    instance_type   = var.instance_type
+    instance_type   = "kafka.t3.small"
     security_groups = [data.aws_security_group.default.id]
-    client_subnets  = [data.aws_subnet.default_subnet.id]
+    client_subnets  = slice(data.aws_subnets.subnets.ids, 0, 2)
+    storage_info {
+      ebs_storage_info {
+        volume_size = 5
+      }
+    }
   }
   cluster_name  = "hotel-kafka"
   kafka_version = "3.5.1"
