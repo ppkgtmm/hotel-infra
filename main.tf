@@ -37,3 +37,28 @@ resource "aws_msk_cluster" "hotel_kafka" {
   cluster_name  = "hotel-kafka"
   kafka_version = "3.5.1"
 }
+
+module "data_generator" {
+  source            = "./data-generator"
+  aws_region        = var.aws_region
+  ubuntu_ami        = var.ubuntu_ami
+  instance_type     = var.instance_type
+  seed_directory    = var.seed_directory
+  s3_bucket_name    = var.s3_bucket_name
+  availability_zone = var.availability_zone
+  depends_on        = [aws_msk_cluster.hotel_kafka]
+}
+
+module "data_seeder" {
+  source             = "./data-seeder"
+  aws_region         = var.aws_region
+  seed_directory     = var.seed_directory
+  s3_bucket_name     = var.s3_bucket_name
+  availability_zone  = var.availability_zone
+  instance_type      = var.instance_type
+  ubuntu_ami         = var.ubuntu_ami
+  source_db_name     = var.source_db_name
+  source_db_username = var.source_db_username
+  source_db_password = var.source_db_password
+  depends_on         = [module.data_generator]
+}
