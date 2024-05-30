@@ -1,10 +1,15 @@
-variable "aws_region" {
-  default = "ap-south-1"
+variable "google_cloud_region" {
+  default = "us-central1"
 }
 
-variable "availability_zone" {
-  default = "ap-south-1a"
+variable "google_cloud_zone" {
+  default = "us-central1-a"
 }
+
+variable "google_cloud_project" {
+  type = string
+}
+
 
 variable "source_db_name" {
   default = "hotel"
