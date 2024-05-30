@@ -10,6 +10,10 @@ variable "google_cloud_project" {
   type = string
 }
 
+variable "terraform_service_account" {
+  type = string
+}
+
 variable "google_cloud_bucket" {
   type = string
 }
