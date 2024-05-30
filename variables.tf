@@ -10,6 +10,21 @@ variable "google_cloud_project" {
   type = string
 }
 
+variable "google_cloud_bucket" {
+  type = string
+}
+
+variable "seed" {
+  default = 42
+}
+
+variable "seed_directory" {
+  default = "seeds/"
+}
+
+variable "location_file" {
+  default = "https://github.com/ppkgtmm/location/raw/main/states_provinces.csv"
+}
 
 variable "source_db_name" {
   default = "hotel"
@@ -45,10 +60,6 @@ variable "replication_password" {
 
 variable "s3_bucket_name" {
   type = string
-}
-
-variable "seed_directory" {
-  default = "seeds/"
 }
 
 variable "warehouse_db_name" {
