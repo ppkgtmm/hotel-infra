@@ -1,23 +1,19 @@
-variable "aws_region" {
+variable "google_cloud_region" {
   type = string
 }
 
-variable "availability_zone" {
-  type = string
-}
-
-variable "ubuntu_ami" {
-  type = string
-}
-
-variable "instance_type" {
-  type = string
-}
-
-variable "s3_bucket_name" {
+variable "google_cloud_bucket" {
   type = string
 }
 
 variable "seed_directory" {
   type = string
+}
+
+variable "location_file" {
+  type = string
+}
+
+variable "seed" {
+  type = number
 }
