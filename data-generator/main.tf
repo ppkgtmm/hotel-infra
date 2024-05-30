@@ -2,7 +2,7 @@ resource "google_cloudfunctions2_function" "datagen" {
   location = var.google_cloud_region
   name     = "hotel-datagen"
   build_config {
-    runtime     = "python3.12"
+    runtime     = "python312"
     entry_point = "get_generated_data"
     source {
       storage_source {
