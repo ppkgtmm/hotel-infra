@@ -5,9 +5,7 @@ tar xzf debezium-server.tar.gz
 cd debezium-server && mkdir -p data/
 wget -O application.properties https://github.com/ppkgtmm/hotel-infra/raw/main/data-streaming/debezium/application.properties
 cat >> application.properties <<EOF
-debezium.sink.kafka.producer.bootstrap.servers=${KAFKA_SERVER}
 debezium.source.database.hostname=${DB_HOST}
-debezium.source.database.port=${DB_PORT}
 debezium.source.database.user=${DB_USER}
 debezium.source.database.password=${DB_PASSWORD}
 debezium.source.database.dbname=${DB_NAME}
