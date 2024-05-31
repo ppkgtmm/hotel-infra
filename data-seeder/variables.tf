@@ -35,3 +35,7 @@ variable "source_db_password" {
   type      = string
   sensitive = true
 }
+
+variable "debezium_ip_address" {
+  type = string
+}
