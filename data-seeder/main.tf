@@ -3,6 +3,7 @@ resource "google_sql_database_instance" "hotel_instance" {
   region              = var.google_cloud_region
   name                = "hotel-db-instance"
   deletion_protection = false
+  root_password       = var.source_db_password
   settings {
     tier              = "db-g1-small"
     edition           = "ENTERPRISE"
@@ -37,8 +38,8 @@ resource "google_sql_database" "hotel_db" {
 
 resource "google_sql_user" "hotel_user" {
   instance = google_sql_database_instance.hotel_instance.name
-  name     = var.source_db_username
-  password = var.source_db_password
+  name     = var.replication_username
+  password = var.replication_password
 }
 
 resource "google_cloudfunctions2_function" "dataseed" {
