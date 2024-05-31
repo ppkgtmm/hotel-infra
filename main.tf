@@ -13,20 +13,8 @@ provider "google" {
   zone    = var.google_cloud_zone
 }
 
-module "data_generator" {
-
-module "data_seeder" {
-  source             = "./data-seeder"
-  aws_region         = var.aws_region
-  seed_directory     = var.seed_directory
-  s3_bucket_name     = var.s3_bucket_name
-  availability_zone  = var.availability_zone
-  instance_type      = var.instance_type
-  ubuntu_ami         = var.ubuntu_ami
-  source_db_name     = var.source_db_name
-  source_db_username = var.source_db_username
-  source_db_password = var.source_db_password
-  depends_on         = [module.data_generator]
+resource "google_compute_address" "debezium_ip" {
+  name = "debezium-ip"
 }
 
 module "data_streaming" {
@@ -44,6 +32,7 @@ module "data_streaming" {
   bootstrap_brokers    = aws_msk_cluster.hotel_kafka.bootstrap_brokers_tls
   depends_on           = [module.data_seeder]
 }
+module "data_generator" {
   source                    = "./data-generator"
   location_file             = var.location_file
   seed                      = var.seed
