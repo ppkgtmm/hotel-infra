@@ -3,7 +3,7 @@ resource "google_sql_database_instance" "hotel_instance" {
   region           = var.google_cloud_region
   name             = "hotel-db-instance"
   settings {
-    tier              = "e2-micro"
+    tier              = "db-g1-small"
     edition           = "ENTERPRISE"
     disk_size         = 10
     disk_autoresize   = false
