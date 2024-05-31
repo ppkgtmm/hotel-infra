@@ -2,9 +2,10 @@ locals {
   debezium_server_variables = {
     GCP_PROJECT_ID = var.google_cloud_project
     DB_HOST        = var.source_db_host
-    DB_USER        = var.source_db_username
-    DB_PASSWORD    = var.source_db_password
+    DB_USER        = var.replication_username
+    DB_PASSWORD    = var.replication_password
     DB_NAME        = var.source_db_name
+    ROOT_PASSWORD  = var.source_db_password
   }
 }
 
