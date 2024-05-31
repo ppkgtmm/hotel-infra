@@ -1,7 +1,3 @@
 output "source_db_host" {
-  value = aws_db_instance.source_db.address
-}
-
-output "source_db_port" {
-  value = aws_db_instance.source_db.port
+  value = google_sql_database_instance.hotel_instance.public_ip_address
 }
