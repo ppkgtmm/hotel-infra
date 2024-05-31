@@ -54,6 +54,10 @@ locals {
 resource "google_compute_instance" "debezium" {
   name         = "debezium"
   machine_type = "e2-micro"
+  service_account {
+    email  = var.terraform_service_account
+    scopes = ["cloud-platform"]
+  }
   boot_disk {
     initialize_params {
       image = "ubuntu-2204-jammy-v20240519"
