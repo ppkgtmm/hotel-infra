@@ -2,6 +2,18 @@ variable "google_cloud_project" {
   type = string
 }
 
+variable "google_cloud_region" {
+  type = string
+}
+
+variable "google_cloud_bucket" {
+  type = string
+}
+
+variable "terraform_service_account" {
+  type = string
+}
+
 variable "source_db_host" {
   type = string
 }
@@ -26,5 +38,9 @@ variable "source_db_name" {
 }
 
 variable "debezium_ip_address" {
+  type = string
+}
+
+variable "source_db_connection" {
   type = string
 }
