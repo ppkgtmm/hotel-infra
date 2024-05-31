@@ -1,7 +1,8 @@
 resource "google_sql_database_instance" "hotel_instance" {
-  database_version = "POSTGRES_15"
-  region           = var.google_cloud_region
-  name             = "hotel-db-instance"
+  database_version    = "POSTGRES_15"
+  region              = var.google_cloud_region
+  name                = "hotel-db-instance"
+  deletion_protection = false
   settings {
     tier              = "db-g1-small"
     edition           = "ENTERPRISE"
