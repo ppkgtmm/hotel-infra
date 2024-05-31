@@ -14,6 +14,10 @@ resource "google_sql_database_instance" "hotel_instance" {
     }
     ip_configuration {
       ipv4_enabled = true
+      authorized_networks {
+        name  = "replication"
+        value = "${var.debezium_ip_address}/32"
+      }
     }
     database_flags {
       name  = "cloudsql.logical_decoding"
