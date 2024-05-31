@@ -43,13 +43,17 @@ module "data_seeder" {
 }
 
 module "data_streaming" {
-  source               = "./data-streaming"
-  source_db_host       = module.data_seeder.source_db_host
-  source_db_password   = var.source_db_password
-  replication_username = var.replication_username
-  replication_password = var.replication_password
-  source_db_name       = var.source_db_name
-  google_cloud_project = var.google_cloud_project
-  debezium_ip_address  = google_compute_address.debezium_ip.address
-  depends_on           = [module.data_seeder]
+  source                    = "./data-streaming"
+  source_db_connection      = module.data_seeder.source_db_connection
+  source_db_host            = module.data_seeder.source_db_host
+  source_db_password        = var.source_db_password
+  replication_username      = var.replication_username
+  replication_password      = var.replication_password
+  source_db_name            = var.source_db_name
+  google_cloud_region       = var.google_cloud_region
+  google_cloud_project      = var.google_cloud_project
+  google_cloud_bucket       = var.google_cloud_bucket
+  terraform_service_account = var.terraform_service_account
+  debezium_ip_address       = google_compute_address.debezium_ip.address
+  depends_on                = [module.data_seeder]
 }
