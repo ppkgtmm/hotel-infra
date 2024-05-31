@@ -52,7 +52,7 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "replication_user" {
+variable "replication_username" {
   type      = string
   sensitive = true
 }
