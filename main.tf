@@ -51,4 +51,5 @@ module "data_streaming" {
   source_db_name       = var.source_db_name
   google_cloud_project = var.google_cloud_project
   debezium_ip_address  = google_compute_address.debezium_ip.address
+  depends_on           = [module.data_seeder]
 }
