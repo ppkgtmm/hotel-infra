@@ -13,6 +13,6 @@ debezium.source.database.dbname=${DB_NAME}
 debezium.source.topic.prefix=${DB_NAME}
 EOF
 mv application.properties conf/
-psql postgresql://root:${ROOT_PASSWORD}@${DB_HOST}/${DB_NAME} -c "ALTER USER ${DB_USER} REPLICATION;"
-psql postgresql://root:${ROOT_PASSWORD}@${DB_HOST}/${DB_NAME} -c "GRANT CREATE ON DATABASE ${DB_NAME} TO ${DB_USER};"
+psql postgresql://postgres:${ROOT_PASSWORD}@${DB_HOST}/${DB_NAME} -c "ALTER USER ${DB_USER} REPLICATION;"
+psql postgresql://postgres:${ROOT_PASSWORD}@${DB_HOST}/${DB_NAME} -c "GRANT CREATE ON DATABASE ${DB_NAME} TO ${DB_USER};"
 chmod +x run.sh && ./run.sh
