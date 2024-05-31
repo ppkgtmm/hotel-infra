@@ -13,5 +13,5 @@ debezium.source.database.dbname=${DB_NAME}
 debezium.source.topic.prefix=${DB_NAME}
 EOF
 mv application.properties conf/
-psql postgresql://root:$ROOT_PASSWORD@$DB_HOST/$DB_NAME -c ""
+psql postgresql://root:${ROOT_PASSWORD}@${DB_HOST}/${DB_NAME} -c "ALTER USER ${DB_USER} REPLICATION;"
 chmod +x run.sh && ./run.sh
