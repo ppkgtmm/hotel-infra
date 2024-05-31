@@ -1,52 +1,35 @@
-resource "aws_db_parameter_group" "source_db" {
-  name   = "${var.source_db_name}-postgres15-6"
-  family = "postgres15"
-  parameter {
-    name         = "rds.logical_replication"
-    value        = "1"
-    apply_method = "pending-reboot"
-  }
-}
-
-resource "aws_db_instance" "source_db" {
-  instance_class       = "db.t3.micro"
-  engine               = "postgres"
-  engine_version       = "15.6"
-  skip_final_snapshot  = true
-  multi_az             = false
-  identifier           = var.source_db_name
-  db_name              = var.source_db_name
-  username             = var.source_db_username
-  password             = var.source_db_password
-  allocated_storage    = 5
-  availability_zone    = var.availability_zone
-  parameter_group_name = aws_db_parameter_group.source_db.name
-}
-
-locals {
-  data_seeder_variables = {
-    GIT_REPO = "https://github.com/ppkgtmm/hotel-seed.git"
-    ENVIRONMENT = {
-      LOCATION_FILE = "https://github.com/ppkgtmm/location/raw/main/states_provinces.csv"
-      SEED          = 42
-      SEED_DIR      = var.seed_directory
-      S3_BUCKET     = var.s3_bucket_name
-      AWS_REGION    = var.aws_region
-      DB_USER       = aws_db_instance.source_db.username
-      DB_PASSWORD   = aws_db_instance.source_db.password
-      DB_ENDPOINT   = aws_db_instance.source_db.endpoint
-      DB_NAME       = aws_db_instance.source_db.db_name
+resource "google_sql_database_instance" "hotel_instance" {
+  database_version = "POSTGRES_15"
+  region           = var.google_cloud_region
+  name             = "hotel-db-instance"
+  settings {
+    tier              = "e2-micro"
+    edition           = "ENTERPRISE"
+    disk_size         = 10
+    disk_autoresize   = false
+    availability_type = "ZONAL"
+    data_cache_config {
+      data_cache_enabled = false
+    }
+    deletion_protection_enabled = false
+    ip_configuration {
+      ipv4_enabled = true
+    }
+    backup_configuration {
+      enabled                        = false
+      binary_log_enabled             = true
+      point_in_time_recovery_enabled = false
     }
   }
 }
-resource "aws_instance" "data_seeder" {
-  instance_type        = var.instance_type
-  ami                  = var.ubuntu_ami
-  user_data            = templatefile("initialize.sh", local.data_seeder_variables)
-  iam_instance_profile = "rds-s3-access"
-  tags = {
-    Name = "data-seeder"
-  }
-  availability_zone = var.availability_zone
-  depends_on        = [aws_db_instance.source_db]
+
+resource "google_sql_database" "hotel_db" {
+  instance = google_sql_database_instance.hotel_instance.name
+  name     = var.source_db_name
+}
+
+resource "google_sql_user" "hotel_user" {
+  instance = google_sql_database_instance.hotel_instance.name
+  name     = var.source_db_username
+  password = var.source_db_password
 }
