@@ -19,6 +19,9 @@ resource "google_sql_database_instance" "hotel_instance" {
       name  = "cloudsql.logical_decoding"
       value = "on"
     }
+    backup_configuration {
+      enabled = false
+    }
   }
 }
 
