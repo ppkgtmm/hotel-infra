@@ -15,10 +15,9 @@ resource "google_sql_database_instance" "hotel_instance" {
     ip_configuration {
       ipv4_enabled = true
     }
-    backup_configuration {
-      enabled                        = false
-      binary_log_enabled             = true
-      point_in_time_recovery_enabled = false
+    database_flags {
+      name  = "cloudsql.logical_decoding"
+      value = "on"
     }
   }
 }
