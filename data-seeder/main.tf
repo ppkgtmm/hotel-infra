@@ -85,4 +85,5 @@ resource "null_resource" "trigger_dataseed" {
       URL   = google_cloudfunctions2_function.dataseed.url
     }
   }
+  depends_on = [google_sql_user.hotel_user]
 }
