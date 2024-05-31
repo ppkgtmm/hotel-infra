@@ -1,3 +1,3 @@
-output "source_db_conn" {
-  value = google_sql_database_instance.hotel_instance.connection_name
+output "source_db_host" {
+  value = google_sql_database_instance.hotel_instance.public_ip_address
 }
