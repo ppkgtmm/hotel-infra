@@ -6,12 +6,17 @@ variable "source_db_host" {
   type = string
 }
 
-variable "source_db_username" {
+variable "source_db_password" {
   type      = string
   sensitive = true
 }
 
-variable "source_db_password" {
+variable "replication_username" {
+  type      = string
+  sensitive = true
+}
+
+variable "replication_password" {
   type      = string
   sensitive = true
 }
