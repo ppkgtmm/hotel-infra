@@ -12,7 +12,6 @@ resource "google_sql_database_instance" "hotel_instance" {
     data_cache_config {
       data_cache_enabled = false
     }
-    deletion_protection_enabled = false
     ip_configuration {
       ipv4_enabled = true
     }
