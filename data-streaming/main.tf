@@ -23,6 +23,7 @@ resource "google_cloudfunctions2_function" "connector" {
       DB_USER        = var.replication_username
       GCP_PROJECT_ID = var.google_cloud_project
     }
+    service_account_email = var.terraform_service_account
   }
 }
 
