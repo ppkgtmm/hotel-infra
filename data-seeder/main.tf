@@ -65,8 +65,8 @@ resource "google_cloudfunctions2_function" "dataseed" {
       SEED_DIR      = var.seed_directory
       GCS_BUCKET    = var.google_cloud_bucket
       CONNECTION    = google_sql_database_instance.hotel_instance.connection_name
-      DB_USER       = var.source_db_username
-      DB_PASSWORD   = var.source_db_password
+      DB_USER       = var.replication_username
+      DB_PASSWORD   = var.replication_password
       DB_NAME       = var.source_db_name
     }
   }
