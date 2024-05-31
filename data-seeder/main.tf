@@ -26,8 +26,9 @@ resource "google_sql_database_instance" "hotel_instance" {
 }
 
 resource "google_sql_database" "hotel_db" {
-  instance = google_sql_database_instance.hotel_instance.name
-  name     = var.source_db_name
+  instance   = google_sql_database_instance.hotel_instance.name
+  name       = var.source_db_name
+  depends_on = [google_sql_user.hotel_user]
 }
 
 resource "google_sql_user" "hotel_user" {
@@ -71,7 +72,7 @@ data "google_service_account_id_token" "id_token" {
   target_service_account = var.terraform_service_account
 }
 
-resource "null_resource" "trigger_datagen" {
+resource "null_resource" "trigger_dataseed" {
   provisioner "local-exec" {
     command = "curl -X POST $URL -H \"Authorization: bearer $TOKEN\" -H \"Content-Type: application/json\""
     environment = {
