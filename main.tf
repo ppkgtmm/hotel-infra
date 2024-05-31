@@ -30,8 +30,9 @@ module "data_generator" {
 module "data_seeder" {
   source                    = "./data-seeder"
   google_cloud_region       = var.google_cloud_region
-  source_db_username        = var.source_db_username
   source_db_password        = var.source_db_password
+  replication_username      = var.replication_username
+  replication_password      = var.replication_password
   terraform_service_account = var.terraform_service_account
   google_cloud_bucket       = var.google_cloud_bucket
   location_file             = var.location_file
