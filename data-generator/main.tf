@@ -23,3 +23,18 @@ resource "google_cloudfunctions2_function" "datagen" {
     }
   }
 }
+
+data "google_service_account_id_token" "id_token" {
+  target_audience        = google_cloudfunctions2_function.datagen.url
+  target_service_account = var.terraform_service_account
+}
+
+resource "null_resource" "trigger_datagen" {
+  provisioner "local-exec" {
+    command = "curl -X POST $URL -H \"Authorization: bearer $TOKEN\" -H \"Content-Type: application/json\""
+    environment = {
+      TOKEN = data.google_service_account_id_token.id_token.id_token
+      URL   = google_cloudfunctions2_function.datagen.url
+    }
+  }
+}
