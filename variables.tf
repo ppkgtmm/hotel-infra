@@ -74,3 +74,7 @@ variable "warehouse_db_password" {
   type      = string
   sensitive = true
 }
+
+variable "temp_bq_dataset" {
+  default = "landing"
+}
