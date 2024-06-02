@@ -22,7 +22,8 @@ resource "google_cloudfunctions2_function" "connector" {
       DB_NAME        = var.source_db_name
       DB_USER        = var.replication_username
       GCP_PROJECT_ID = var.google_cloud_project
-      BQ_DATASET     = var.temp_bq_dataset
+      GCP_REGION     = var.google_cloud_region
+      GCP_ZONE       = split("-", var.google_cloud_zone)[2]
     }
     service_account_email = var.terraform_service_account
   }
