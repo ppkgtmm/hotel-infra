@@ -51,6 +51,7 @@ module "data_streaming" {
   replication_password      = var.replication_password
   source_db_name            = var.source_db_name
   google_cloud_region       = var.google_cloud_region
+  google_cloud_zone         = var.google_cloud_zone
   google_cloud_project      = var.google_cloud_project
   google_cloud_bucket       = var.google_cloud_bucket
   terraform_service_account = var.terraform_service_account
