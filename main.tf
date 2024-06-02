@@ -59,3 +59,13 @@ module "data_streaming" {
   temp_bq_dataset           = var.temp_bq_dataset
   depends_on                = [module.data_seeder]
 }
+
+module "data_processor" {
+  source                    = "./data-processor"
+  google_cloud_project      = var.google_cloud_project
+  google_cloud_region       = var.google_cloud_region
+  google_cloud_zone         = var.google_cloud_zone
+  google_cloud_bucket       = var.google_cloud_bucket
+  terraform_service_account = var.terraform_service_account
+  depends_on                = [module.data_streaming]
+}
