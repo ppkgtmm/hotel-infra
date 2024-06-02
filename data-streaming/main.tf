@@ -47,6 +47,7 @@ resource "null_resource" "trigger_connector" {
 locals {
   debezium_server_variables = {
     GCP_PROJECT_ID = var.google_cloud_project
+    GCP_ZONE       = var.google_cloud_zone
     DB_HOST        = var.source_db_host
     DB_USER        = var.replication_username
     DB_PASSWORD    = var.replication_password
