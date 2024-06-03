@@ -27,7 +27,7 @@ data "google_service_account_id_token" "id_token" {
   target_service_account = var.terraform_service_account
 }
 
-resource "null_resource" "trigger_connector" {
+resource "null_resource" "trigger_processor" {
   provisioner "local-exec" {
     command = "curl -X POST $URL -H \"Authorization: bearer $TOKEN\" -H \"Content-Type: application/json\""
     environment = {
