@@ -48,7 +48,3 @@ variable "debezium_ip_address" {
 variable "source_db_connection" {
   type = string
 }
-
-variable "temp_bq_dataset" {
-  type = string
-}
