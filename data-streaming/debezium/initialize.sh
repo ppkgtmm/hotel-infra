@@ -13,5 +13,8 @@ debezium.source.database.password=${DB_PASSWORD}
 debezium.source.database.dbname=${DB_NAME}
 debezium.source.topic.prefix=${DB_NAME}
 EOF
+CONN_STR="postgresql://${ROOT_USER}:${ROOT_PASSWORD}@${DB_HOST}/${DB_NAME}"
+psql $CONN_STR -c "ALTER USER ${DB_USER} REPLICATION;"
+psql $CONN_STR -c "GRANT CREATE ON DATABASE ${DB_NAME} TO ${DB_USER};"
 mv application.properties conf/
 chmod +x run.sh && ./run.sh
