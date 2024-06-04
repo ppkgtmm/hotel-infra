@@ -39,14 +39,6 @@ variable "source_db_password" {
   sensitive = true
 }
 
-variable "ubuntu_ami" {
-  default = "ami-05e00961530ae1b55"
-}
-
-variable "instance_type" {
-  default = "t2.micro"
-}
-
 variable "replication_username" {
   type      = string
   sensitive = true
@@ -55,26 +47,4 @@ variable "replication_username" {
 variable "replication_password" {
   type      = string
   sensitive = true
-}
-
-variable "s3_bucket_name" {
-  type = string
-}
-
-variable "warehouse_db_name" {
-  default = "hotel"
-}
-
-variable "warehouse_db_username" {
-  type      = string
-  sensitive = true
-}
-
-variable "warehouse_db_password" {
-  type      = string
-  sensitive = true
-}
-
-variable "temp_bq_dataset" {
-  default = "landing"
 }
