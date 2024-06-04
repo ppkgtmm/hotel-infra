@@ -4,17 +4,17 @@ resource "google_dataproc_cluster" "hotel_stream" {
   cluster_config {
     master_config {
       num_instances = 1
-      machine_type  = "e2-micro"
+      machine_type  = "e2-small"
       disk_config {
         boot_disk_type    = "pd-standard"
-        boot_disk_size_gb = 10
+        boot_disk_size_gb = 30
       }
     }
     worker_config {
       num_instances = 2
-      machine_type  = "e2-micro"
+      machine_type  = "e2-small"
       disk_config {
-        boot_disk_size_gb = 10
+        boot_disk_size_gb = 30
         boot_disk_type    = "pd-standard"
       }
     }
