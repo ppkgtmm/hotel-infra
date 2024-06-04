@@ -56,7 +56,6 @@ module "data_streaming" {
   google_cloud_bucket       = var.google_cloud_bucket
   terraform_service_account = var.terraform_service_account
   debezium_ip_address       = google_compute_address.debezium_ip.address
-  temp_bq_dataset           = var.temp_bq_dataset
   depends_on                = [module.data_seeder]
 }
 
