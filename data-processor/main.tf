@@ -99,5 +99,5 @@ resource "google_compute_firewall" "metabase" {
     ports    = [3000]
   }
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["metabase"]
+  target_tags   = google_compute_instance.metabase.tags
 }
