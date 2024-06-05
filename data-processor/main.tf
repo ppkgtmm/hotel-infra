@@ -68,3 +68,36 @@ resource "null_resource" "trigger_processor" {
     }
   }
 }
+
+resource "google_compute_instance" "metabase" {
+  name         = "metabase"
+  machine_type = "e2-small"
+  service_account {
+    email  = var.terraform_service_account
+    scopes = ["cloud-platform"]
+  }
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-2204-jammy-v20240519"
+    }
+  }
+  network_interface {
+    network = "default"
+    access_config {
+    }
+  }
+  tags                    = ["metabase"]
+  metadata_startup_script = file("data-processor/metabase.sh")
+  depends_on              = [null_resource.trigger_processor]
+}
+
+resource "google_compute_firewall" "metabase" {
+  name    = "metabase-firewall"
+  network = "default"
+  allow {
+    protocol = "tcp"
+    ports    = [3000]
+  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["metabase"]
+}
