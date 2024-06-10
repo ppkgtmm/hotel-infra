@@ -21,7 +21,7 @@ done
 bq ls --transfer_config --transfer_location us | cut -w -f2,2 | grep "projects/" > temp
 while read -r line 
 do
-    bq rm --transfer_config $line
+    bq rm --transfer_config $line -f
 done < temp
 
 rm temp
